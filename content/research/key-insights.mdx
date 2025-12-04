@@ -1,0 +1,269 @@
+# Key Insights
+
+## The Self-Service Imperative
+
+The current website generates work. Customers call because they can't find products, can't see stock, can't track orders, can't see their pricing. Customer service exists to compensate for website failures.
+
+Every top-rated feature (100%, 91%, 91%, 80%, 74% consensus) serves one strategic goal: eliminate the need for customers to contact the company for routine information.
+
+### Current workflow
+
+```
+The customer needs the order status
+  → Calls CS
+    → CS looks up in ERP
+      → Reads info over phone
+        → Customer satisfied but inefficient
+```
+
+### Desired workflow
+
+```
+The customer needs the order status
+  → Logs into the portal
+    → Views status instantly
+      → No call required
+```
+
+The math is straightforward. If 50%+ of CS calls are order status inquiries, and portal provides self-service, that's 50%+ call reduction. Kate's team processes 70 manual orders daily with four people. If those customers could place orders online with their carrier accounts and negotiated pricing visible, that's 70 fewer manual orders.
+
+---
+
+## Search as Foundation
+
+Search dysfunction touches everything else. Can't browse effectively without working search as backup. Can't enable power users who think in part numbers. Can't support dimensional queries ("I need a 3-inch cap"). Can't cross-reference competitor part numbers.
+
+### The data is unambiguous:
+
+- **100% error rate** in search logs (999 of 1,000 queries)
+- **85.7% zero-result queries**
+- **27K search page views** (third highest on site)
+- **15+ calls daily per CS rep** just for search help
+
+Search is rated the #2 priority with 91% consensus. IT estimates 20-25% sales increase potential from fixing it. The fix is technically straightforward: replace custom code with Magento native Elasticsearch.
+
+Without working search, every other feature improvement hits a ceiling. Interactive tables help, but users still need search. Multi-path navigation helps, but power users still search. Configurators help, but only for new buyers who don't know what they need.
+
+**Search is the foundation. Build it first.**
+
+---
+
+## Data Accuracy as Blocker
+
+Jim (Beckett Operations) warns:
+> "Without 100% accurate data, automated portals or features could create more problems than they solve."
+
+This isn't theoretical. Europe demonstrates the consequence. 40-50% order cancellations happen because website stock data doesn't match warehouse reality. The site shows Ukrainian warehouse when products ship from Poland. Lead times display 65 days for items manufactured in 14 days. Minimum quantities show 10,000 when customers can order 10.
+
+### The problem has five dimensions:
+
+1. **Stock level inaccuracy:** Website and ERP show different numbers
+2. **Lead time errors:** Manufacturing reality doesn't match site display
+3. **Warehouse location confusion:** Recent UK-to-Poland shift poorly communicated
+4. **Minimum order quantity issues:** Artificial barriers to sale
+5. **Pricing errors:** Box quantities and price breaks inconsistent
+
+**Root cause:** Sage Fox Pro is aged system. Custom sync code creates bottleneck. Updates take 2 weeks to 3 months. One product (RTL Series) took 13 months to appear after launch.
+
+**Implication for this project:**
+Data audit must be Phase 0, not a parallel track. Launch with bad data creates worse experience than current broken site. Bad data means:
+- Portal shows wrong order status
+- Search returns products that aren't in stock
+- Pricing displayed doesn't match checkout
+- Customer trust erodes faster than it can be rebuilt
+
+Take 2-4 weeks to audit and fix data before development. It's not a delay. It's a foundation.
+
+---
+
+## Tables Must Be Interactive
+
+Users click on product tables expecting spreadsheet behavior. They try to sort by diameter. They attempt to filter by material. They click column headers assuming they're clickable.
+
+### CrazyEgg data shows:
+
+- **48-54% of all clicks** happen on product tables
+- **11.6% are dead clicks** on non-functional headers
+- **4.3% are rage clicks** on broken controls
+
+This pattern appears across all three brands:
+- MOCAP: 3,257 clicks total, 1,749 on table (53.7%)
+- Cleartec: 1,388 clicks total, 667 on table (48.1%)
+- Beckett: 1,157 clicks total, 626 on table (54.1%)
+
+### What users expect:
+- Sortable columns (size, price, availability)
+- Filterable rows (show only FDA-approved)
+- Searchable content (find "silicone" in table)
+- Inline actions (add to cart without leaving)
+- Imperial/metric toggle for MOCAP
+
+### Current reality:
+- Static HTML tables
+- No sorting
+- No filtering
+- No search within
+- Separate "Add to Cart" page loads
+
+Competitors prove this is table stakes. Caplugs has sortable tables. Fastenal has filterable grids. DBI has inline cart actions. MOCAP is behind market baseline.
+
+---
+
+## Visual Navigation Dominates
+
+Text-based left sidebar navigation consistently underperforms. Users navigate by clicking images.
+
+### Click distribution:
+
+```
+MOCAP:
+  Images: 22-33% of clicks
+  Left sidebar: 5-8% of clicks
+  Search: 6-7% fallback
+
+Cleartec/Beckett:
+  Images: 44-52% of clicks
+  Left sidebar: 5-13% of clicks
+  Search: 6-8% fallback
+```
+
+This reveals mental model: "Show me what it looks like, I'll tell you if it's what I need."
+
+Navigation strategy must prioritize:
+1. Visual product tiles with clear images
+2. Image-first category pages
+3. Mega menu with visual examples
+4. Minimize reliance on text-only sidebar
+5. Mobile: hamburger currently carries 31% of MOCAP mobile clicks (over-dependency risk)
+
+---
+
+## Consolidation with Nuance Required
+
+Eight of 28 stakeholders mentioned brand confusion as a problem:
+- "Most confusing thing is that the company name is MOCAP, the packaging products are Beckett which can be found on the Cleartec website"
+- "Customers aren't aware we have two websites"
+- "The split websites confuse customers"
+
+But stakeholders also recognize brand-specific needs:
+- MOCAP users want variant tables (show all 320+ variants at once)
+- Cleartec users need visual design inspiration
+- Beckett users need tool-type taxonomy
+- X-Treme Tape buyers expect educational content
+
+**The solution isn't "one size fits all":**
+
+Unified platform ≠ identical experience
+
+Build one technical foundation (codebase, database, ERP middleware) but deliver brand-specific experiences (theming, IA, configurators, navigation).
+
+Think Apple. One company, different product lines (iPhone, Mac, iPad), each with tailored experience but shared infrastructure.
+
+---
+
+## Configurator Hesitation Reveals Design Opportunity
+
+CrazyEgg shows 61.8% of clicks on Cleartec configurator dropdowns, but users hesitate 10-20 seconds before first selection. They're unsure what each parameter controls.
+
+### Current pattern:
+
+```
+[Dropdown 1: Select Option ▼]
+[Dropdown 2: Select Option ▼]
+[Dropdown 3: Select Option ▼]
+[Dropdown 4: Select Option ▼]
+```
+
+Parameters appear without context. Users don't know if they're choosing:
+- Functional specifications
+- Aesthetic options
+- Compatibility requirements
+- Pricing variables
+
+### Dead clicks and rage clicks on "Configure your Item" header:
+- 22 rage clicks
+- 64 dead clicks
+- Users expect help text or explanation
+
+**Recommendation:**
+Step-based wizard with contextual guidance. "First, select your tube diameter." "Now choose your cap style." Progressive disclosure reduces cognitive load.
+
+---
+
+## Three Buyer Archetypes Drive Different Paths
+
+Competitor analysis identified pattern validated by stakeholder interviews and CrazyEgg data:
+
+### Veteran (30%)
+- Knows exact SKU
+- Needs speed above all
+- Search by part number, add to cart, checkout
+- Desktop-dominant
+- Tolerates current broken experience by calling in
+
+### Problem Solver (50%)
+- Knows application ("protect threads during powder coating")
+- Needs guided discovery
+- Browses by use case, filters options, samples first
+- Mix of desktop and mobile
+- Gets frustrated and abandons or calls
+
+### Explorer (20%)
+- Researching options
+- Needs education
+- Reads content, compares products, builds knowledge
+- Mobile-friendly browsing
+- Long consideration cycle
+
+**Single-path navigation fails two-thirds of users.**
+
+MOCAP currently optimizes for Veterans (part number search, variant tables) but breaks even that experience. Problem Solvers and Explorers get abandoned.
+
+Multi-path IA required:
+- "I Know My Part Number" (Veterans)
+- Browse by Application (Problem Solvers)
+- Browse by Product Type (Problem Solvers)
+- Browse by Industry (Explorers)
+- Educational Content (Explorers)
+
+---
+
+## Mobile Parity, Not Afterthought
+
+Current site isn't mobile-friendly. Yet mobile traffic approaches one-third:
+- MOCAP: 27% mobile
+- Cleartec: Similar mobile percentage
+- Growing steadily
+
+Mobile behavior differs from desktop:
+- 31% of MOCAP mobile clicks go to hamburger menu (over-reliance)
+- Visual navigation more dominant on mobile
+- Form-filling more friction on mobile
+- Configuration more difficult on mobile
+
+But mobile users are real buyers, not just researchers. Cart abandonment is 77% overall (device split unknown due to broken analytics), but mobile likely higher.
+
+**Design implication:**
+Not "mobile-first" ideology, but mobile parity. Core features must work equally well on both. Portal on phone. Search on tablet. Checkout on mobile. No degraded experience.
+
+---
+
+## Regional Feature Polarization Reveals Truth
+
+MoSCoW ratings show dramatic regional splits on certain features:
+
+### International Features
+- Europe/Mexico/China: 5.0/5.0 average
+- US: 1.5-2.0/5.0 average
+
+Why? US team doesn't handle international complexity. VAT calculations, warehouse selection, currency conversion, delivery estimates across borders. These features don't impact US operations but are critical for international success.
+
+### Sample Management Features
+- Some stakeholders: 5.0/5.0 (desperate for limits)
+- Other stakeholders: 2.0/5.0 (don't see abuse)
+- Clear divide: those who process samples vs. those who don't
+
+This polarization validates feature relevance. When half rate something 5/5 and half rate it 2/5, that's not mixed consensus. That's "critical for specific use case, irrelevant otherwise."
+
+**Design implication:**
+Build features for those who need them intensely. Don't average scores and assume 3.5/5 means "moderately important to everyone." It means "critical to some, irrelevant to others."

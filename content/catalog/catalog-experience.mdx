@@ -1,0 +1,315 @@
+# Catalog Experience
+
+## Catalog Clarity & Mental Models
+
+Users interact with product catalogs expecting behaviors learned from spreadsheets, Amazon, and industrial supplier sites. The current MOCAP experience violates these expectations at every turn.
+
+### The Four Brand Realities
+
+Each brand operates with different catalog logic, different product complexity, and different user expectations:
+
+| Brand | Scale | Complexity | Primary User Mental Model |
+|-------|-------|------------|---------------------------|
+| **MOCAP** | 85 series, 2,195 SKUs, ~66K variants | Extreme (320+ variants per product) | "Show me all sizes in a table" |
+| **Cleartec** | 21 series, 328 SKUs | Moderate (configurator-dependent) | "Help me build what I need" |
+| **Beckett** | 18 series, 440 SKUs | Moderate (tool-specific) | "I need protection for this tool type" |
+| **X-Treme Tape** | 3 types, 24 SKUs | Simple (color/size matrix) | "Which color for my application?" |
+
+Different scales demand different approaches.
+
+### The Data Quality Crisis (By Brand)
+
+Before discussing catalog experience, acknowledge what research revealed: the data foundation is broken.
+
+**MOCAP (Flagship):**
+- Only 46% mention product benefits
+- Inconsistent format across series
+- 46 series contain "Plug"
+- 28 series contain "Cap"
+- Flat list (no hierarchy)
+
+**Cleartec:**
+- 62% missing material specifications
+- 76% missing ID/OD dimensions
+- No closure compatibility matrix
+- But 94.8% have packaging quantities
+
+**Beckett:**
+- 100% empty product descriptions
+- 100% empty typical applications
+- 67% missing material specs
+- **This is catastrophic. Can't launch catalog features with this data quality.**
+
+**X-Treme Tape:**
+- 83.3% complete dimensional data
+- Clear SKU logic (width × length × color)
+- Color usage guidance missing
+
+**Implication:** Data audit is Phase 0. Writing 440 Beckett descriptions, completing 62% of Cleartec materials, enriching 54% of MOCAP descriptions. This isn't optional.
+
+---
+
+## User Behavior: Tables as Tools
+
+Users don't view product tables as static displays. They interact expecting spreadsheet behavior:
+
+### User Actions on Tables (Observed)
+
+| Action | Result | Impact |
+|--------|--------|--------|
+| Click column headers expecting sort | 11.6% dead clicks | Frustration when nothing happens |
+| Click filter dropdowns expecting refinement | 4.3% rage clicks | Abandon when can't narrow |
+| Type in search expecting table filter | No search within table exists | Leave for global search |
+| Tap "Add to Cart" expecting inline action | Page reload required | Extra friction on mobile |
+
+**Quantified impact:**
+- 48-54% of all clicks happen on product tables
+- MOCAP: 3,257 clicks total, 1,749 on table (53.7%)
+- Cleartec: 1,388 clicks total, 667 on table (48.1%)
+- Beckett: 1,157 clicks total, 626 on table (54.1%)
+
+Tables are THE primary interaction point. Yet they're completely static.
+
+### Mental Model: "I Know What I'm Looking For"
+
+Veterans arrive with specifications. They scan tables looking for exact match:
+
+**MOCAP User (Thread Protection):**
+```
+Mental process:
+  "I need 3/4-inch NPT thread protector, vinyl, red"
+
+Expects to:
+  1. Land on vinyl caps category page
+  2. See table with ALL variants visible
+  3. Filter or sort to narrow
+  4. Identify exact SKU
+  5. Add to cart from table
+
+Current reality:
+  1. Land on category page ✓
+  2. See static HTML table ✗
+  3. Can't filter, can't sort ✗
+  4. Must read through entire list ✗
+  5. Click through to separate page ✗
+```
+
+**Competitor comparison:** Caplugs provides this. Sortable table, inline cart, stock indicators. Veterans complete purchase in 2 minutes. MOCAP forces 5-10 minutes of manual scanning, or user calls CS.
+
+### Mental Model: "Help Me Figure This Out"
+
+Problem Solvers arrive knowing application, not specifications:
+
+**Cleartec User (Retail Packaging):**
+```
+Mental process:
+  "I'm packaging candles, 2.5" diameter,
+   need clear tube with end caps"
+
+Expects:
+  1. Start with product category (tubes)
+  2. Enter known dimension (2.5" diameter)
+  3. See compatible options
+  4. Guided through cap selection
+  5. Visual preview of assembly
+
+Current reality:
+  1. Category page exists ✓
+  2. Configurator present BUT ✗
+     - 10-20 second hesitation before use
+     - Unclear what each dropdown controls
+     - No visual preview
+     - No cap compatibility suggestions
+  3. User uncertain if selection correct
+```
+
+---
+
+## Size Charts, Filters & Variant Logic
+
+### The Variant Complexity Challenge
+
+MOCAP's scale creates unique UX challenges. Some products have 320+ variants.
+
+**Example: Round Vinyl Caps (RVC Series)**
+```
+Dimensions that vary:
+  - Inside Diameter (ID): 1/8" to 6"
+  - Outside Diameter (OD): Calculated based on wall thickness
+  - Length: 1/4" to 8"
+  - Wall Thickness: Standard, Heavy, Extra Heavy
+  - Color: Red, Black, Blue, Yellow, Natural, Custom
+  - Features: Pull Tab (yes/no), Flanged (yes/no)
+  - Temperature Rating: Standard (180°F), High-Temp (250°F), Silicone (500°F)
+  - Certifications: FDA (yes/no), RoHS (yes/no)
+
+Total combinations: 320+ distinct SKUs in single series
+```
+
+**Current display:** Flat table with 320 rows. Scroll for days.
+**User expectation:** Filter to relevant subset in seconds.
+
+### Intelligent Filtering Strategy
+
+Filters must mirror how users think about selection:
+
+**Priority 1 Filters (Always Visible):**
+
+| Brand | Filter Set |
+|-------|------------|
+| MOCAP | Size Range, Material, Temperature, Color (swatches) |
+| Cleartec | Diameter (slider), Length (input), End Cap Style, Material |
+| Beckett | Tool Type (radio), Tool Diameter, Tool Length, Material Features |
+
+**Priority 2 Filters (Collapsed by Default):**
+Thread Type, Certifications (FDA, RoHS, REACH), Features (Pull Tab, Flanged, Vented), Stock Status, Min Order Quantity
+
+### Filter UX Patterns That Work
+
+**Real-time Results Count:**
+```
+FILTERS
+├─ Size Range
+│  ○ 1/4" (43 products)
+│  ○ 1/2" (67 products)
+│  ● 3/4" (52 products) [SELECTED]
+│  ○ 1" (89 products)
+│
+├─ Material
+│  ☑ Vinyl (52 products)
+│  ☐ Silicone (0 products) [GREYED OUT]
+│  ☐ LDPE (23 products)
+│
+└─ Showing 52 of 320 variants
+   [Clear All Filters]
+```
+
+Key UX elements:
+- Live count per option (transparency)
+- Disable unavailable combinations (prevent zero results)
+- Multi-select within category
+- Visual feedback on active filters
+- One-click reset
+
+### Mobile Filter Strategy
+
+Tables don't work on mobile. 320-row tables definitely don't.
+
+**Mobile pattern:**
+```
+[Filters] [Sort By: Relevance ▼] [Grid/List toggle]
+
+Tapping [Filters] opens drawer with:
+- Collapsible filter categories
+- Live product count
+- [Clear All] [Apply Filters] buttons
+
+Results display as cards, not tables.
+```
+
+### Variant Logic: When to Show What
+
+| Product Size | Display Strategy |
+|--------------|------------------|
+| Simple (24 variants or fewer) | Show all in single table |
+| Medium (25-100 variants) | Show all with collapsible sections |
+| Complex (100+ variants) | Default to filtered view |
+| Hyper-Complex (320+ variants) | Force progressive selection |
+
+---
+
+## Cross-Brand Catalog Consistency
+
+Four brands with different products need consistency without uniformity.
+
+### Universal Elements (All Brands)
+
+**Stock Indicators:**
+```
+● In Stock (15,000 available)
+● Low Stock (< 500 remaining)
+◐ Limited Stock (500-2,000)
+○ Out of Stock (2-3 weeks)
+○ Made to Order (4-6 weeks)
+```
+
+**Pricing Display:**
+```
+List Price: $0.125 ea
+Your Price: $0.108 ea (logged in)
+
+Quantity breaks:
+  1,000-4,999:  $0.108 ea
+  5,000-9,999:  $0.102 ea
+  10,000+:      $0.095 ea
+```
+
+**Action Buttons:**
+```
+Primary: [Add to Cart]
+Secondary: [Request Sample] [Get Quote]
+Tertiary: [Compare] [Save] [Share]
+```
+
+### Brand-Specific Patterns
+
+**MOCAP: Variant Tables**
+- Emphasis: Show all options at once
+- Pattern: Expandable table with heavy filtering
+- Technical buyers want comprehensive view
+
+**Cleartec: Configurators**
+- Emphasis: Guided dimensional selection
+- Pattern: Step-based wizard with preview
+- Design buyers want guidance, not overwhelming choice
+
+**Beckett: Tool-Type Filtering**
+- Emphasis: Browse by tool category
+- Pattern: Category cards → Dimensional input
+- Tool managers think in tool types first, dimensions second
+
+**X-Treme Tape: Application Focus**
+- Emphasis: Problem/solution matching
+- Pattern: Application cards → Product recommendations
+- Problem-first navigation. Product second.
+
+### Configurator UX Patterns (Cleartec Focus)
+
+Current configurator causes 10-20 second hesitation. Users unsure what each dropdown controls.
+
+**Problem:**
+```
+Configure Your Item
+[Select Option ▼]  [Select Option ▼]  [Select Option ▼]  [Select Option ▼]
+
+No context. No guidance. User paralyzed.
+```
+
+**Solution: Stepped Approach**
+```
+Step 1 of 4: Choose Tube Diameter
+
+We'll walk you through building your perfect tube.
+
+What inside diameter do you need?
+  ○ 1/2"     ○ 3/4"     ○ 1"
+  ○ 1.25"    ● 1.5"     ○ 2"
+  ○ Other: [____] in
+
+Why this matters:
+Inside diameter determines what fits inside your tube.
+Measure your product and add 1/8" clearance.
+
+[Visual: Tube cross-section showing ID measurement]
+
+[← Back] [Continue to Length →]
+```
+
+**Key UX improvements:**
+1. One decision per step (reduces cognitive load)
+2. Clear "Why this matters" explanation
+3. Visual preview shows impact of each choice
+4. Progress indicator (Step X of Y)
+5. Back navigation allows revision
+6. Running configuration summary
+7. Price updates with each step

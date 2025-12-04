@@ -1,0 +1,683 @@
+# Search & Findability
+
+## Search Behavior
+
+### The Current Failure State
+
+Search isn't just broken. It's catastrophically dysfunctional:
+
+```
+SEARCH LOG ANALYSIS (1,000 QUERIES)
+
+Error Rate:        100% (999 of 1,000 return 401 error)
+Zero Results:      85.7% (857 of 1,000 queries)
+Average Latency:   1.28 seconds (too slow)
+Slow Queries:      59% take >1 second
+
+Sites Most Affected:
+  mocap.com:              359 failed searches
+  mocap.co.uk:            168 failed searches
+  cleartecpackaging.com:  115 failed searches
+  mocap-france.com:       103 failed searches
+```
+
+**This isn't a bug. This is a complete system failure.**
+
+Stakeholder impact:
+- 15+ calls daily per CS rep just for search help
+- 20-25% sales increase potential from fixing
+- 68% of stakeholders mentioned this unprompted
+- #2 priority feature with 91% consensus
+
+### Query Pattern Analysis
+
+What users actually search for (even though nothing works):
+
+**Part Number Queries (30% of attempts):**
+```
+RVC9044
+FCB0375NA1
+XTR2036B
+CLET125-12
+
+User expectation: Instant exact match
+Current result: 401 error or zero results
+Required behavior: Direct to product page
+```
+
+**Dimensional Queries (25% of attempts):**
+```
+3 inch cap
+1/4 tube
+3/4 npt plug
+2.5 diameter
+
+User expectation: Products matching dimension
+Current result: Zero results
+Required behavior: Parse dimension, show matches
+```
+
+**Application Queries (20% of attempts):**
+```
+powder coating masking
+thread protection
+furniture leg caps
+hydraulic fitting covers
+
+User expectation: Products for that use case
+Current result: Zero results
+Required behavior: Application landing page + products
+```
+
+**Material Queries (15% of attempts):**
+```
+silicone plugs
+vinyl caps
+high temp
+fda approved
+
+User expectation: Filter by material/property
+Current result: Zero results
+Required behavior: Material-filtered results
+```
+
+**Competitor Cross-Reference (10% of attempts):**
+```
+caplugs 123-456
+equivalent to [competitor part]
+
+User expectation: MOCAP equivalent identified
+Current result: Zero results
+Required behavior: Cross-reference database match
+```
+
+Six distinct search modes required. Current system supports zero.
+
+### Mental Models: How Users Search
+
+**Veteran Buyer (Knows exact part):**
+```
+Behavior: Types SKU, expects instant result
+
+Search: "RVC9044"
+
+Mental model:
+  "I ordered this before"
+  "I have the part number"
+  "Just show me the product"
+
+Tolerance for error: ZERO
+  → If search fails, calls CS immediately
+  → Or goes to competitor site
+```
+
+**Problem Solver (Knows dimensions):**
+```
+Behavior: Describes size in natural language
+
+Search: "3 inch vinyl cap red"
+
+Mental model:
+  "I know what size I need"
+  "I have some preference for material/color"
+  "Show me options that fit"
+
+Tolerance for error: LOW
+  → Will try 2-3 search variations
+  → Then calls CS or abandons
+```
+
+**Explorer (Knows application):**
+```
+Behavior: Describes use case
+
+Search: "protect threads during painting"
+
+Mental model:
+  "I have a problem to solve"
+  "What products work for this?"
+  "Educate me on options"
+
+Tolerance for error: MODERATE
+  → Will browse after failed search
+  → But expects search to shortcut to answer
+```
+
+**Novice (Uncertain terminology):**
+```
+Behavior: Uses general terms
+
+Search: "cap" or "plug" or "tube"
+
+Mental model:
+  "I think I need something like this"
+  "Not sure of exact product type"
+  "Need guidance"
+
+Tolerance for error: HIGH
+  → Expects zero results for vague query
+  → But needs helpful suggestions
+```
+
+Different users, different search strategies, all currently fail.
+
+---
+
+## Filtering & Discovery
+
+Search gets users to results. Filters narrow those results to the right product.
+
+### Faceted Search Architecture
+
+Post-search filtering is as important as search itself:
+
+**Search Results Page Structure:**
+```
+┌────────────────────────────────────────────────────────┐
+│ [Search: "vinyl caps"]                      [Search]   │
+├────────────────────────────────────────────────────────┤
+│ 284 results for "vinyl caps"                          │
+│                                                        │
+│ Did you mean: [Vinyl Caps & Plugs] [High-Temp Caps]  │
+└────────────────────────────────────────────────────────┘
+
+┌──────────────────┬─────────────────────────────────────┐
+│ REFINE BY        │ SEARCH RESULTS                      │
+├──────────────────┤                                     │
+│ Size             │ Sort by: [Relevance ▼]             │
+│ □ 1/4" (23)     │                                     │
+│ □ 1/2" (67)     │ ┌────────────────────────────────┐ │
+│ □ 3/4" (52)     │ │ [Image] RVC0750R               │ │
+│ □ 1" (89)       │ │ 3/4" Round Vinyl Cap, Red      │ │
+│ [Show more...]  │ │ ● In Stock • $0.125 ea         │ │
+│                 │ │ [Add to Cart] [Sample]         │ │
+│ Material        │ └────────────────────────────────┘ │
+│ ☑ Vinyl (284)   │                                     │
+│ □ Silicone (45) │ ┌────────────────────────────────┐ │
+│ □ LDPE (128)    │ │ [Image] RVC0750B               │ │
+│                 │ │ 3/4" Round Vinyl Cap, Black    │ │
+│ Color           │ │ ● In Stock • $0.125 ea         │ │
+│ [Red] [Black]   │ │ [Add to Cart] [Sample]         │ │
+│ [Blue] [Yellow] │ └────────────────────────────────┘ │
+│                 │                                     │
+│ Temperature     │ [Load more results...]              │
+│ □ under 180°F (201)  │                                     │
+│ □ 180-400°F (83)│                                     │
+│                 │                                     │
+│ Stock Status    │                                     │
+│ ☑ In Stock      │                                     │
+│ □ 2-3 weeks     │                                     │
+│                 │                                     │
+│ Features        │                                     │
+│ □ Pull Tab (67) │                                     │
+│ □ Flanged (34)  │                                     │
+│                 │                                     │
+│ [More filters▼] │                                     │
+└──────────────────┴─────────────────────────────────────┘
+```
+
+Left sidebar: Filters (collapsible on mobile)
+Right main: Results grid with inline actions
+
+### Filter Priority by Product Category
+
+Not all filters matter for all searches:
+
+**Caps & Plugs (MOCAP):**
+```
+Priority 1: Size, Material, Temperature
+Priority 2: Color, Thread Type, Features
+Priority 3: Certifications, Stock Status
+```
+
+**Tubes & Closures (Cleartec):**
+```
+Priority 1: Diameter, Length, Material
+Priority 2: Wall Thickness, Cap Compatibility
+Priority 3: Color, Printing Options
+```
+
+**Tool Protection (Beckett):**
+```
+Priority 1: Tool Type, Tool Diameter
+Priority 2: Material Features (foam, coolant-safe)
+Priority 3: Length Range, Telescopic
+```
+
+**Tape (X-Treme):**
+```
+Priority 1: Application Type, Temperature Rating
+Priority 2: Width, Color
+Priority 3: Length (only 2 options anyway)
+```
+
+Context-sensitive filtering. Show relevant options first.
+
+### Smart Filter Behavior
+
+Filters should guide users toward success, not zero results:
+
+**Real-Time Result Count:**
+```
+Size
+□ 1/4" (23)
+□ 1/2" (67)
+□ 3/4" (52)
+□ 1" (89)
+
+User can see: "If I select 1/2", I'll get 67 results"
+Prevents zero-result selections
+```
+
+**Disable Invalid Combinations:**
+```
+Material
+☑ Vinyl (284)
+☐ Silicone (0) [GREYED OUT]
+
+If no silicone in current result set, grey out option
+Don't allow user to select dead-end filters
+```
+
+**Progressive Narrowing:**
+```
+Initial: 284 vinyl caps
+
+Select Size: 3/4" → 52 results
+Select Color: Red → 12 results
+Select Feature: Pull Tab → 3 results
+
+Active filters always visible:
+[3/4" ×] [Red ×] [Pull Tab ×] [Clear All]
+```
+
+**Applied Filter Feedback:**
+```
+Showing 3 of 284 vinyl caps
+
+To see more results:
+  • Remove [Pull Tab ×] filter (+9 more)
+  • Remove [Red ×] filter (+40 more)
+  • Remove [3/4" ×] filter (+232 more)
+
+Guides user toward more results if too narrow
+```
+
+### Zero-Results Handling
+
+Searches that return nothing shouldn't dead-end:
+
+**Zero Results Page:**
+```
+┌────────────────────────────────────────────────────┐
+│ No results found for "xyz12345"                    │
+├────────────────────────────────────────────────────┤
+│ SUGGESTIONS:                                       │
+│                                                    │
+│ 1. Check your part number                         │
+│    • Remove spaces or hyphens                     │
+│    • Try searching without color suffix           │
+│    • Example: "XYZ12345R" → "XYZ12345"           │
+│                                                    │
+│ 2. Search by dimensions instead                    │
+│    [What size do you need?] [Search]              │
+│                                                    │
+│ 3. Browse by application                          │
+│    [Thread Protection] [Powder Coating]           │
+│    [Tube Packaging] [Tool Protection]             │
+│                                                    │
+│ 4. Get help from specialist                       │
+│    Phone: (555-0100) or [Start Live Chat]         │
+│                                                    │
+│ RELATED PRODUCTS:                                  │
+│ [Products from similar categories...]             │
+└────────────────────────────────────────────────────┘
+```
+
+Never abandon user on blank page. Always provide next steps.
+
+### Synonym Handling
+
+Users describe products differently than database categorizes them:
+
+**Synonym Mapping Required:**
+```
+User search → Database term
+
+"cap"           → "cap", "cover", "protector"
+"plug"          → "plug", "cap" (yes, overlap)
+"protector"     → "cap", "plug", "cover"
+"masking"       → "high-temp cap", "powder coating"
+"thread cover"  → "threaded cap", "NPT cap"
+"end cap"       → "tube cap", "closure"
+"tape"          → "masking tape", "self-fusing tape"
+```
+
+Some terms are completely interchangeable in industry. System must know this.
+
+**Competitor terms:**
+```
+User searches: "Caplugs style cap"
+System understands: Show MOCAP equivalent products
+
+User searches: "Fastenal 1234"
+System: Check cross-reference database
+```
+
+**Misspellings:**
+```
+"vynil" → "vinyl"
+"selicone" → "silicone"
+"powercoating" → "powder coating"
+
+Fuzzy matching within 1-2 characters
+```
+
+### Autocomplete Intelligence
+
+Search box should assist, not just receive input:
+
+**Autocomplete Behavior:**
+```
+User types: "3 i"
+
+Dropdown appears:
+┌────────────────────────────────────────┐
+│ 🔍 3 inch cap                          │
+│ 🔍 3 inch tube                         │
+│ 🔍 3 inch plug                         │
+├────────────────────────────────────────┤
+│ 📦 RVC3000 - 3" Round Vinyl Cap       │
+│ 📦 FCB3000 - 3" Tapered Plug          │
+├────────────────────────────────────────┤
+│ 📄 Thread Protection for 3" Fittings  │
+└────────────────────────────────────────┘
+
+Suggests:
+  - Query completions (top)
+  - Direct product matches (middle)
+  - Content pages (bottom)
+
+Keyboard navigable
+Click or Enter to select
+```
+
+**Smart Suggestions:**
+```
+For part numbers: Show exact match FIRST
+  User: "RVC"
+  Top result: "RVC Series - Round Vinyl Caps"
+
+For dimensions: Parse and suggest
+  User: "3/4"
+  Top results: "3/4 inch caps", "3/4 inch plugs"
+
+For applications: Suggest landing pages
+  User: "powder"
+  Top results: "Powder Coating Masking Solutions"
+```
+
+Autocomplete reduces typing, guides intent, prevents errors.
+
+### Search History & Saved Searches (Logged-In Users)
+
+Repeat buyers often search for same products:
+
+**Search History:**
+```
+┌────────────────────────────────────────┐
+│ YOUR RECENT SEARCHES                   │
+├────────────────────────────────────────┤
+│ 🕐 RVC9044 (2 hours ago)              │
+│ 🕐 3/4 vinyl cap (yesterday)          │
+│ 🕐 powder coating (3 days ago)        │
+│                                        │
+│ [Clear history]                        │
+└────────────────────────────────────────┘
+```
+
+One-click to re-run search.
+
+**Saved Searches:**
+```
+┌────────────────────────────────────────┐
+│ SAVED SEARCHES                         │
+├────────────────────────────────────────┤
+│ ⭐ My regular caps (RVC series, red)  │
+│ ⭐ High-temp silicone plugs           │
+│                                        │
+│ [Manage saved searches]                │
+└────────────────────────────────────────┘
+```
+
+Power users bookmark frequent queries.
+
+---
+
+## UX Recommendations
+
+### Replace Custom Search with Native Elasticsearch
+
+Current custom search is the root problem. It's:
+- Poorly maintained
+- Disconnected from product data
+- Returning 100% errors
+- Too slow (1.28s average)
+
+**Solution:** Use Magento native Elasticsearch
+
+Benefits:
+- Built-in synonym support
+- Auto-complete included
+- Fast indexing
+- Regular updates
+- Native integration with catalog
+
+Technical implementation outside this document's scope, but UX recommendation is clear: **abandon custom code, use proven platform tool**.
+
+### Six Search Modes Implementation
+
+System must recognize query type and respond appropriately:
+
+**Mode 1: Exact Part Number**
+```
+Query: RVC9044
+Recognition: Alphanumeric, matches SKU pattern
+Response: Direct to product page (no results page)
+Fallback: "Did you mean RVC0944?" if not found
+```
+
+**Mode 2: Dimensional**
+```
+Query: 3 inch cap
+Recognition: Contains number + unit + product type
+Response: Parse dimension → Filter products → Results page
+Display: "Showing caps with 3" inside diameter"
+```
+
+**Mode 3: Application**
+```
+Query: powder coating masking
+Recognition: Contains application keyword
+Response: Application landing page + filtered products
+Display: "Powder Coating Protection Solutions"
+```
+
+**Mode 4: Material/Property**
+```
+Query: FDA approved silicone
+Recognition: Contains material/certification keywords
+Response: Filter by attributes → Results page
+Display: "FDA-approved silicone products"
+```
+
+**Mode 5: Competitor Cross-Reference**
+```
+Query: Caplugs 123-456
+Recognition: Contains competitor name + part number
+Response: Cross-reference database lookup → Equivalent
+Display: "MOCAP equivalent: RVC9044"
+```
+
+**Mode 6: Natural Language**
+```
+Query: what protects 1/2 inch threads during painting
+Recognition: Full sentence structure
+Response: Intent parsing → Application match → Products
+Display: "Thread protection for 1/2" during painting"
+```
+
+Each mode requires different backend logic, but user shouldn't think about modes. System adapts to query type automatically.
+
+### Search Box Placement
+
+Search is #2 priority feature. Placement must reflect importance:
+
+**Desktop:**
+```
+┌──────────────────────────────────────────────────┐
+│ MOCAP                                            │
+│                                                  │
+│ ┌──────────────────────────────────────┐  Cart │
+│ │ 🔍 Search products, part numbers... │   (3) │
+│ └──────────────────────────────────────┘       │
+│                                                  │
+│ Products | Applications | Industries | Support  │
+└──────────────────────────────────────────────────┘
+```
+
+Prominent in header. Visible on every page. Can't miss it.
+
+**Mobile:**
+```
+┌──────────────────────────────────┐
+│ ☰  MOCAP                    🔍 🛒│
+│                                  │
+│ Tapping 🔍 expands search:       │
+│                                  │
+│ ┌──────────────────────────────┐│
+│ │ 🔍 Search...              [×]││
+│ └──────────────────────────────┘│
+│                                  │
+│ [Recent: RVC9044]                │
+│ [Recent: 3/4 cap]                │
+└──────────────────────────────────┘
+```
+
+Search icon in header. Expands to full-width input. Shows recent searches.
+
+**Alternative: Persistent Search Bar**
+```
+┌──────────────────────────────────┐
+│ ┌──────────────────────────────┐│
+│ │ 🔍 Search...                 ││
+│ └──────────────────────────────┘│
+│ ☰                           🛒 │
+│ MOCAP                      Cart │
+└──────────────────────────────────┘
+```
+
+Search bar above logo on mobile. Always visible. No tap to reveal.
+
+User testing will determine best mobile pattern, but search must be immediately accessible.
+
+### Search Analytics & Continuous Improvement
+
+Search isn't "done" after launch. Requires ongoing optimization:
+
+**Track Metrics:**
+```
+Success Rate:
+  % of searches leading to product view
+  % of searches leading to add-to-cart
+  % of searches leading to purchase
+
+Failure Indicators:
+  % zero-result searches
+  % refined searches (user tried multiple queries)
+  % searches followed by site exit
+
+Query Analysis:
+  Most common queries
+  Queries with zero results
+  Queries with low click-through
+  Queries with high bounce
+```
+
+**Monthly Review Process:**
+```
+1. Identify top 50 zero-result queries
+2. Determine if:
+   a) Product doesn't exist (can't fix)
+   b) Synonym missing (add to dictionary)
+   c) Data enrichment needed (add keywords)
+   d) Query parsing failed (improve algorithm)
+3. Implement fixes
+4. Measure improvement
+```
+
+**Synonym Dictionary Growth:**
+```
+Start with 100-200 common synonyms
+Add 10-20 per month based on real queries
+Example:
+  Month 1: User searches "high heat cap"
+          → Zero results
+          → Add synonym: "high heat" → "high temperature"
+  Month 2: Query now succeeds
+```
+
+Search improves over time through data-driven refinement.
+
+### Search Results Best Practices
+
+How results display matters as much as which results return:
+
+**Result Card Design:**
+```
+┌────────────────────────────────────┐
+│ [Product Image]                    │
+│                                    │
+│ RVC0750R                          │
+│ 3/4" Round Vinyl Cap, Red         │
+│                                    │
+│ ● In Stock (15,000)               │
+│ $0.125 ea (1,000+)                │
+│                                    │
+│ Temperature: -20°F to 180°F       │
+│ Pull tab available                 │
+│                                    │
+│ [🛒 Add to Cart] [📋 Sample]      │
+└────────────────────────────────────┘
+```
+
+Key info visible without click:
+- SKU and description
+- Stock status
+- Pricing (if logged in)
+- Key differentiators
+- Actions inline
+
+**Relevance Ranking:**
+```
+Priority 1: Exact SKU match
+Priority 2: Exact dimension match
+Priority 3: Close dimension match
+Priority 4: Application relevance
+Priority 5: Material/property match
+Priority 6: Related products
+```
+
+Most relevant first. User finds answer quickly.
+
+**Visual Highlighting:**
+```
+Search query: "3/4 red vinyl"
+
+Result displays with highlights:
+3/4" Round Vinyl Cap, Red
+     ^^^^      ^^^^^     ^^^
+
+Query terms highlighted in results
+User sees why result matched
+```

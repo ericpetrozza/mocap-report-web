@@ -1,0 +1,762 @@
+# User Flows
+
+## Flow Notation Guide
+
+```
+◼ Page/Screen
+◆ Decision Point
+→ Forward Action
+★ Success Outcome
+⚠ Friction Point
+```
+
+---
+
+## Flow 1: Sample Request Flow
+
+### Goal
+Request free product samples to test fit before placing full order.
+
+### Who This Flow Serves
+First-time buyers (Problem Solver persona) who need to verify product compatibility before purchasing.
+
+### High-Level Flow Diagram
+
+```
+◼ Google Search Results
+→ User lands on application landing page
+◼ Powder Coating Protection Landing Page
+→ User clicks "Request Free Samples"
+◼ Sample Request Page
+◆ Does user know exact size?
+ → Yes: Select specific SKU from table
+ → No: Use Size Guide Helper
+◼ Size Guide Helper (if needed)
+→ User adds 3-5 samples to cart ($0.00 each)
+◼ Cart Page
+◆ Sample only or add full order?
+ → Sample only: proceed to checkout
+ → Add products: continue shopping
+◼ Checkout (guest OK, shipping $12.95)
+→ Complete order
+◼ Order Confirmation
+★ Success: Samples will arrive in 5-7 days
+```
+
+### Critical Breakpoints
+- **Size uncertainty**: User doesn't know which size fits their application
+- **Guest vs account**: User must decide whether to create account
+- **Shipping cost surprise**: Sample shipping fee must be transparent upfront
+- **Follow-up conversion**: Sample arrival doesn't automatically convert to sale
+
+### What the System Must Support
+- $0.00 cart items (free sample products)
+- Size guide helper tool with measurement instructions
+- Guest checkout (no forced registration)
+- Shipping cost calculator showing $12.95 upfront
+- Email reminder system (2 weeks post-delivery)
+- Easy path from sample confirmation back to full order
+
+### Friction Summary
+- No clear sample request process exists
+- Users must call or email sales rep
+- Lead time and availability unclear
+
+### Opportunity Summary
+- Self-service sample ordering reduces sales calls
+- Size helper reduces wrong selections
+- Email follow-up automates conversion nurturing
+- Guest checkout removes registration friction
+- Clear shipping cost prevents cart abandonment
+
+---
+
+## Flow 2: Product Browsing Flow
+
+### Goal
+Find the correct protective cap for hydraulic fittings by browsing application-specific recommendations.
+
+### Who This Flow Serves
+Engineers (Explorer persona) who prefer to browse by application rather than search by part number.
+
+### High-Level Flow Diagram
+
+```
+◼ Homepage
+◆ How does user want to browse?
+ → By Application (selected)
+ → By Product Type
+ → By Industry
+ → By Part Number
+◼ Applications Page
+→ User selects "Hydraulic Fitting Protection"
+◼ Application Landing Page
+→ User selects "Threaded Vinyl Caps"
+◼ Product Family Page (Interactive Table)
+→ User applies filters: NPT + 3/4"
+◼ Filtered Results (12 products)
+→ User selects 2 items to compare
+◼ Comparison View
+◆ Which variant is right?
+ → Red selected (visibility for QC)
+◼ Quantity Modal
+→ User enters quantity: 1,000 pcs
+◼ Add to Cart Confirmation
+★ Success: Product identified and added to cart
+```
+
+### Critical Breakpoints
+- **Navigation choice**: User must find application-based entry point
+- **Filter overwhelm**: 320+ variants need smart filtering
+- **Size verification**: User needs confidence they selected correct size
+- **Quantity decision**: Standard packaging vs custom quantity
+- **Comparison paralysis**: Too many similar options
+
+### What the System Must Support
+- Multi-path navigation (application, product type, industry, part number)
+- Interactive filterable product tables
+- Live filter counts showing results before applying
+- Side-by-side comparison tool (2-5 products)
+- Inline "Add to Cart" actions in tables
+- Quantity modal with pricing updates
+- Toast notifications for cart actions
+
+### Friction Summary
+- No application-based entry path exists
+- Static HTML tables cannot be filtered or sorted
+- No comparison functionality between variants
+
+### Opportunity Summary
+- Application navigation matches user mental models
+- Interactive tables reduce cognitive load
+- Comparison tool reduces uncertainty
+- Inline cart actions improve efficiency
+- Real-time price updates increase transparency
+
+---
+
+## Flow 3: Brand Identification Flow
+
+### Goal
+Understand the relationship between MOCAP and Cleartec brands and find the right product family.
+
+### Who This Flow Serves
+New customers who discover one brand but need products from another MOCAP family brand.
+
+### High-Level Flow Diagram
+
+```
+◼ Google Search Results ("clear packaging tubes")
+→ User lands on MOCAP homepage
+◼ MOCAP Homepage
+⚠ User looking for tubes, sees caps/plugs
+→ User notices "Looking for clear tubes? See Cleartec"
+→ User clicks Cleartec link
+◼ Cleartec Homepage (distinct branding)
+→ Subtle banner: "Cleartec is part of MOCAP family"
+◼ Product Catalog
+→ User finds clear tubes
+→ Uses configurator
+→ Adds to cart
+★ Success: Brand relationship understood, product found
+```
+
+### Critical Breakpoints
+- **Initial confusion**: Landing on wrong brand for their need
+- **Brand discovery**: Finding cross-brand reference
+- **Trust verification**: Understanding brands are related, not competitors
+- **Navigation transition**: Moving between brand sites seamlessly
+- **Cart continuity**: Managing items from multiple brands
+
+### What the System Must Support
+- Brand subdomains maintaining distinct identities (cleartec.domain.com)
+- Cross-brand navigation links in header (subtle, not intrusive)
+- Explanatory banner on first visit to clarify relationship
+- Unified cart across all brands
+- Single checkout process for multi-brand orders
+- Consistent stock/pricing display across brands
+
+### Friction Summary
+- Three separate websites with unclear relationships
+- Company name is MOCAP but products spread across sites
+- No unified navigation or discovery mechanism
+
+### Opportunity Summary
+- Subdomain structure preserves brand equity
+- Subtle cross-brand presence enables discovery
+- Unified cart simplifies multi-brand purchasing
+- Explanatory messaging reduces confusion
+- Cross-sell opportunities surface naturally
+
+---
+
+## Flow 4: Size Chart Interpretation Flow
+
+### Goal
+Identify correct product size by measuring application and interpreting size chart.
+
+### Who This Flow Serves
+Procurement managers (Veteran persona) who need to match product dimensions to their specific application.
+
+### High-Level Flow Diagram
+
+```
+◼ Product Family Page
+→ User sees "Not sure which size? Measure your application"
+→ User clicks "How to Measure"
+◼ Measurement Guide Modal
+→ Visual diagram shows ID, OD, Length
+→ Step-by-step measurement instructions
+→ User measures application: 3/4" NPT thread
+◼ Interactive Size Table
+→ User filters: Size = 3/4", Thread Type = NPT
+◼ Filtered Results (4 variants)
+◆ Does size look correct?
+ → Uncertain: use Size Confirmation Helper
+ → Confident: add to cart
+◼ Size Confirmation Helper (if needed)
+→ System verifies fit based on measurements
+→ Recommendation provided with explanation
+◆ Still uncertain?
+ → Yes: Request free sample
+ → No: Add to cart
+★ Success: Correct size selected with confidence
+```
+
+### Critical Breakpoints
+- **Measurement knowledge**: User may not know how to measure properly
+- **Unit confusion**: Metric vs imperial measurements
+- **Fit tolerance**: Understanding how tight/loose fit should be
+- **Verification anxiety**: Uncertainty despite measurement
+- **Wrong selection recovery**: Easy returns if size incorrect
+
+### What the System Must Support
+- Visual measurement guide with diagrams (ID, OD, Length)
+- Metric/imperial converter tool
+- Interactive size helper asking clarifying questions
+- Fit verification with specific explanations
+- Sample request option from size selector
+- Easy returns process for wrong sizes
+
+### Friction Summary
+- Size charts are static HTML with no guidance
+- No measurement instructions or visual aids
+- Customers frequently guess wrong and return
+
+### Opportunity Summary
+- Visual guides reduce measurement errors
+- Interactive helper builds confidence
+- Sample option provides verification path
+- Clear explanations prevent returns
+- Easy returns policy reduces purchase anxiety
+
+---
+
+## Flow 5: Product Configuration Flow
+
+### Goal
+Build custom clear tube with specific dimensions, caps, and printing for retail packaging.
+
+### Who This Flow Serves
+Marketing designers (Cleartec users) creating custom packaging for retail display.
+
+### High-Level Flow Diagram
+
+```
+◼ Cleartec Homepage
+→ User clicks "Retail Packaging"
+◼ Retail Packaging Category
+→ User selects "Clear Tubes"
+◼ Clear Tubes Product Page
+→ User clicks "Build Your Tube"
+◼ Configurator - Step 1/4: Diameter
+→ User selects 2.5" ID
+◼ Configurator - Step 2/4: Length
+→ User enters custom length: 5.5"
+◼ Configurator - Step 3/4: End Caps
+→ User selects Flat caps (top and bottom)
+◼ Configurator - Step 4/4: Options
+→ User adds full-color printing option
+→ Pricing updates: $4.85/unit (250 qty)
+◆ Ready to order or need custom quote?
+ → Standard quantity: add to cart
+ → Below minimum (100 units): request quote
+→ User requests quote (below minimum)
+◼ Quote Request Form
+→ Pre-filled with configuration
+→ User submits
+◼ Quote Confirmation
+★ Success: Custom configuration saved, quote requested
+```
+
+### Critical Breakpoints
+- **Dimension confusion**: User unsure what measurements needed
+- **Configuration complexity**: Too many options shown at once
+- **Pricing transparency**: Cost must update in real-time
+- **Minimum quantity**: Below minimum triggers quote instead of cart
+- **Visual preview**: Need to see what they're building
+
+### What the System Must Support
+- Stepped wizard (one decision per screen)
+- Progressive disclosure of options
+- Visual preview updating with each selection
+- "Why this matters" explanations for each choice
+- Real-time pricing calculator
+- Minimum quantity validation
+- Seamless transition from configurator to quote request
+- Configuration saved for future reference
+
+### Friction Summary
+- No configurator exists (must describe via email)
+- All options shown at once creating overwhelm
+- No visual preview of configuration
+- Pricing unclear until quote received
+
+### Opportunity Summary
+- Stepped wizard reduces cognitive load
+- Visual preview builds confidence
+- Real-time pricing enables self-service
+- Explanatory content educates users
+- Easy quote request for custom needs
+
+---
+
+## Flow 6: Search & Filter Refinement Flow
+
+### Goal
+Find exact product variant quickly using search with intelligent autocomplete and filtering.
+
+### Who This Flow Serves
+Power users (Veteran persona) who know what they want and expect fast, precise search.
+
+### High-Level Flow Diagram
+
+```
+◼ Homepage
+→ User types in search: "3/4 vinyl cap red"
+◼ Search Autocomplete Appears
+→ Shows product suggestions + past queries
+→ User selects autocomplete suggestion
+◼ Search Results Page
+→ Smart filters auto-applied from query
+→ Filters shown: Size=3/4", Material=Vinyl, Color=Red
+→ 147 results displayed
+⚠ Still too many results
+→ User adds filter: Pull Tab feature
+◼ Refined Results (34 products)
+→ User changes sort: Price Low to High
+→ Top result: RVC0750RPT
+→ User clicks inline "Add to Cart"
+◼ Quantity Modal
+→ User enters 5,000 pcs
+→ Volume discount auto-applies
+★ Success: Exact variant found in under 30 seconds
+```
+
+### Critical Breakpoints
+- **Search quality**: Query must return relevant results
+- **Filter intelligence**: System should auto-apply obvious filters
+- **Refinement clarity**: Live counts show impact of filters before applying
+- **Sort priority**: Default sort may not match user preference
+- **Cart friction**: Multi-step process slows power users
+
+### What the System Must Support
+- Smart autocomplete (queries + products + categories)
+- Natural language query parsing
+- Auto-applied filters from search terms
+- Live filter counts showing result numbers
+- Multiple sort options (price, popularity, stock)
+- Inline "Add to Cart" actions
+- Search analytics capturing: query, filters, sort, time-to-cart, conversion
+
+### Friction Summary
+- Search returns zero results for most queries
+- No autocomplete suggestions
+- No filter refinement capability
+- Static results with no sorting
+
+### Opportunity Summary
+- Smart autocomplete reduces typing and errors
+- Auto-applied filters save clicks
+- Live counts prevent dead-end filtering
+- Inline cart actions improve efficiency
+- Analytics enable continuous search improvement
+
+---
+
+## Flow 7: Cross-Brand Exploration Flow
+
+### Goal
+Discover complementary products from other MOCAP brands to create complete solution.
+
+### Who This Flow Serves
+Manufacturers needing multiple product types for powder coating masking (caps + tape).
+
+### High-Level Flow Diagram
+
+```
+◼ MOCAP Product Page (High-Temp Vinyl Caps)
+→ User scrolls to bottom
+◼ Related Products Section
+→ "Complete Your Masking Solution"
+→ Shows X-Treme Tape recommendation
+→ User clicks "Learn more about X-Treme Tape"
+◼ X-Treme Tape Landing Page
+→ Different branding but clear relationship
+→ Breadcrumb shows: "From MOCAP > Powder Coating"
+→ Banner: "X-Treme Tape is part of MOCAP family"
+◼ Product Selection
+→ User selects 2" width, Black, High-Temp
+→ Adds to cart
+◼ Cart Update Notification
+→ "Your cart contains items from multiple brands"
+→ Shows MOCAP caps + X-Treme tape
+→ Single checkout, combined shipping
+◼ Checkout
+→ All items ship from same warehouse
+→ One order number
+★ Success: Complete solution purchased seamlessly
+```
+
+### What the System Must Support
+- Cross-brand product recommendations based on application
+- Unified cart across all brand subdomains
+- Clear brand relationship messaging
+- Single checkout process for multi-brand orders
+- Combined shipping calculation
+- Breadcrumb navigation showing cross-brand path
+
+---
+
+## Flow 8: Application Advisor Flow
+
+### Goal
+Receive guided product recommendations for furniture leg protection through interactive advisor tool.
+
+### Who This Flow Serves
+New customers (Explorer persona) who find products through application-specific searches.
+
+### High-Level Flow Diagram
+
+```
+◼ Google Search ("furniture leg protectors")
+→ User lands on Application Landing Page
+◼ Furniture Protection Landing Page
+→ Common challenges listed
+→ Three solution categories shown with photos
+→ User clicks "Round Vinyl Caps"
+◼ Product Family Page
+→ "Not sure which size? Use furniture leg finder"
+→ User clicks finder tool
+◼ Application Advisor Tool
+→ Step 1: Measure furniture leg (visual guide)
+→ User enters: 1.5"
+→ Step 2: Furniture type (Indoor/Outdoor/Commercial)
+→ User selects: Outdoor
+→ Step 3: Color preference
+→ User selects: Black
+→ System calculates recommendation
+◼ Recommendation Page
+→ Product: RVC1500B (1.5" black outdoor-rated)
+→ Quantity calculator: 6 furniture pieces = 24 caps
+→ Recommended order: 100-pack
+◆ Confident or need samples?
+ → Request samples (selected)
+◼ Sample Cart ($0.00 + $5.95 shipping)
+◼ Checkout
+◼ Email Follow-up (2 weeks later)
+→ "How did samples work?"
+→ User clicks "Order now"
+★ Success: Correct product found through guidance
+```
+
+### What the System Must Support
+- Application-specific landing pages with problem/solution framing
+- Interactive advisor tools asking targeted questions
+- Visual measurement guides
+- Quantity calculator based on user's needs
+- Sample request workflow
+- Email automation (2-week follow-up)
+- Easy path from sample to full order
+
+---
+
+## Flow 9: Material Specification Exploration Flow
+
+### Goal
+Verify silicone material properties and chemical resistance for paint booth application.
+
+### Who This Flow Serves
+Engineers (technical buyers) who need detailed material specifications for compliance and compatibility.
+
+### High-Level Flow Diagram
+
+```
+◼ Product Page (Silicone Plugs)
+→ User clicks "Technical Specifications" tab
+◼ Technical Specifications Section
+→ Material properties listed
+→ Chemical resistance summary shown
+→ User clicks "View Complete Chemical Resistance Chart"
+◼ Chemical Resistance Chart
+→ Comprehensive table with 100+ chemicals
+→ User checks: Acetone = Fair (2 hrs max)
+⚠ Application needs extended acetone exposure
+◆ Is silicone suitable?
+ → User clicks "Show alternative materials"
+◼ Material Comparison Tool
+→ Three materials compared for paint booth use
+→ High-Temp Vinyl recommended
+→ User clicks "View High-Temp Vinyl Products"
+◼ High-Temp Vinyl Product Page
+→ User scrolls to Downloads section
+◼ Technical Documents
+→ User selects multiple PDFs
+→ Datasheet, CAD, MSDS, Chem Chart, RoHS
+→ Downloads as ZIP file
+→ User reviews, confirms suitability
+→ Returns to site, adds to cart
+★ Success: Material verified, documentation obtained
+```
+
+### What the System Must Support
+- Comprehensive technical specification sections
+- Chemical resistance charts (searchable/filterable)
+- Material comparison tool with application context
+- Downloadable documentation (PDF, CAD, MSDS)
+- Alternative material suggestions
+- Live chat/contact for complex questions
+
+---
+
+## Flow 10: Contact Sales / Request Assistance Flow
+
+### Goal
+Get personalized help selecting products through live chat with sales specialist.
+
+### Who This Flow Serves
+Small business owners (overwhelmed) facing complex product selection with many options.
+
+### High-Level Flow Diagram
+
+```
+◼ Product Page (147 variants, complex)
+⚠ User overwhelmed by options
+→ User clicks "Need Help? Talk to Specialist"
+◼ Contact Method Choice
+→ Four options: Call Now, Live Chat, Email, Schedule Call
+→ User selects Live Chat
+◼ Chat Window Opens
+→ Sales rep: "What application are you protecting?"
+→ User describes: Furniture dowel legs
+→ Rep asks: Diameter? Indoor/Outdoor? Color?
+→ User answers: 3/4", Indoor, Brown
+→ Rep recommends: RVC0750BR
+→ Rep calculates quantity: 280/month needed
+→ Rep suggests: 1,000-piece starter order
+◆ User wants samples first
+→ Rep adds 5 samples to cart ($0.00)
+→ Rep creates account for user
+→ Rep provides discount code: SAMPLE25
+→ Rep sends cart link
+◼ Shopping Cart (samples added by rep)
+→ User proceeds to checkout
+◼ Checkout (account auto-created)
+★ Success: Guidance received, samples ordered
+```
+
+### What the System Must Support
+- Prominent "Need Help?" button on complex pages
+- Multiple contact channels (chat, phone, email, scheduled)
+- Live chat during business hours (8am-5pm EST)
+- Async message system for after hours
+- Chat transcript and cart linking
+- Account creation during chat session
+- Sample + discount code workflow
+- Email follow-up after sample delivery
+
+---
+
+## Flow 11: Custom Molding Quote Flow
+
+### Goal
+Request quote for custom-molded parts with specific material, dimensional, and branding requirements.
+
+### Who This Flow Serves
+Engineers or procurement managers needing custom solutions not available as standard products.
+
+### High-Level Flow Diagram
+
+```
+◼ MOCAP Homepage or Product Page
+→ User clicks "Custom Solutions"
+◼ Custom Solutions Page
+→ Explanation of custom molding capabilities
+→ User clicks "Request Custom Quote"
+◼ Custom Quote Wizard - Step 1/4: Application
+→ What are you protecting/covering?
+→ Replacing what solution?
+→ What's wrong with current solution?
+◼ Step 2/4: Specifications
+→ Can you provide sample part? (Yes/No)
+→ Quantity needed per year
+→ Target price per piece
+◼ Step 3/4: Requirements
+→ Material requirements (UV, temp, durometer)
+→ Color requirements (Pantone match)
+→ Special features (logo, texture)
+◼ Step 4/4: Timeline & Contact
+→ Production date needed
+→ Budget range
+→ Contact information
+◼ Review & Submit
+→ Summary of all requirements shown
+→ User submits quote request
+◼ Confirmation Page
+→ Reference number provided
+→ Next steps outlined clearly
+→ Sample shipping label download
+→ Calendar reminder for consultation call
+★ Success: Custom solution developed, order placed
+```
+
+### What the System Must Support
+- Structured quote request wizard
+- File upload for logos and drawings
+- Sample shipping label generation
+- Calendar integration for scheduling
+- Timeline transparency (show full process)
+- Prototype feedback form
+- Revision tracking
+- Production quote generation
+- Email notifications at each stage
+
+---
+
+## Flow 12: Checkout / Quote Request Flow
+
+### Goal
+Complete B2B purchase using company carrier account and Net 30 payment terms.
+
+### Who This Flow Serves
+Procurement managers at established companies with preferred carriers and payment terms.
+
+### High-Level Flow Diagram
+
+```
+◼ Shopping Cart
+→ Items: Caps (5K), Caps (2K), Tape (10)
+→ Subtotal: $1,028.50
+→ User clicks "Proceed to Checkout"
+◼ Checkout - Step 1: Account
+→ User signs in with company credentials
+◼ Step 2: Shipping Address
+→ Default company address pre-filled
+→ Delivery instructions added
+◼ Step 3: Shipping Method
+→ Options shown:
+  - MOCAP Standard Ground ($45.50)
+  - Your UPS Account (selected)
+  - Your FedEx Account
+  - Request Freight Quote
+→ User selects UPS account (saved)
+◼ Step 4: Payment
+→ Options shown:
+  - Net 30 Terms (selected)
+  - Credit Card
+  - Purchase Order Number
+→ User enters PO number
+◼ Step 5: Review Order
+→ Complete order summary shown
+→ Tax: $0.00 (resale cert on file)
+→ User reviews and confirms
+◼ Order Confirmation
+→ Order number provided
+→ Timeline and tracking info explained
+→ Portal features highlighted
+★ Success: Order placed with carrier account & terms
+```
+
+### What the System Must Support
+- Saved carrier accounts (UPS, FedEx) with one-click selection
+- Net 30 terms for approved business accounts
+- Resale certificate storage and validation
+- PO number field and tracking
+- Saved shipping addresses
+- One-click reorder functionality
+- Quote request from cart for large orders
+- Portal integration post-purchase
+
+---
+
+## Flow 13: Reorder / Saved Lists Flow
+
+### Goal
+Quickly reorder previously purchased products in under 60 seconds using order history.
+
+### Who This Flow Serves
+Returning customers (Veterans) with recurring needs for the same products.
+
+### High-Level Flow Diagram
+
+```
+◼ Homepage
+→ User clicks "My Account"
+◼ Login Page
+→ User signs in
+◼ Portal Dashboard
+→ Recent orders displayed
+→ Quick action: "Reorder Last Order"
+→ User clicks "Reorder" on recent order
+◼ Reorder Confirmation
+→ Previous order items listed with checkboxes
+◆ Reorder exactly or adjust?
+ → User selects "Adjust Quantities"
+◼ Quantity Adjustment Screen
+→ RVC0750R: 5,000 → 7,500 (increase)
+→ TVC1000B: 2,000 → 2,000 (same)
+→ X-Treme Tape: 10 → 20 (increase)
+→ Prices update with volume discounts
+→ User clicks "Add to Cart"
+◼ Cart with Reorder Items
+→ Saved shipping method pre-selected
+→ Saved payment terms pre-selected
+→ "Checkout with Saved Settings" option shown
+→ User clicks one-click checkout
+◼ Order Confirmation
+→ Order placed in 38 seconds
+★ Success: Fast reorder completed
+```
+
+**Alternative Path: Saved Lists**
+
+```
+◼ Portal Dashboard
+→ User clicks "Saved Lists"
+◼ Saved Lists Page
+→ "Monthly Production Supply" list shown
+→ User clicks list name
+◼ List Details
+→ 5 items shown
+◆ Order now or automate?
+ → User clicks "Set Up Auto-Reorder"
+◼ Auto-Reorder Setup
+→ Frequency: Monthly (1st of month)
+→ Notification: Email 3 days before
+→ Allow adjustment before processing
+→ User confirms
+◼ Auto-Reorder Activated
+→ Next order: January 1
+→ Email reminder: December 29
+★ Success: Recurring orders automated
+```
+
+### What the System Must Support
+- Order history with detailed item lists
+- One-click reorder from past orders
+- Quantity adjustment before re-adding to cart
+- Saved shopping lists (unlimited lists)
+- Auto-reorder scheduling with multiple frequency options
+- Email reminders before auto-processing
+- Ability to skip/cancel scheduled orders
+- Saved checkout preferences (address, carrier, payment)

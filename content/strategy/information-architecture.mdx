@@ -1,0 +1,375 @@
+# Information Architecture
+
+## Current IA Problems
+
+### The Flat Taxonomy Trap
+
+MOCAP's 85 product series live in flat list:
+```
+- Caps, Plastic Protective
+- Caps, Round Vinyl
+- Caps, Tapered Vinyl
+- Hole Plugs
+- Plugs, Button Style
+- Plugs, Pull Tab
+- Plugs, Universal
+- [... 78 more ...]
+```
+
+**Problems:**
+- 46 series contain word "Plug"
+- 28 series contain word "Cap"
+- No clear distinction or hierarchy
+- Users must read through entire list
+- "Plug" and "Cap" often mean same thing
+
+### The Missing Application Context
+
+Current navigation thinks in product types. Users think in applications.
+
+**Users ask:**
+- "What protects threads during powder coating?"
+- "What fits a 3/4-inch rod?"
+- "What works for outdoor use?"
+
+**Site answers:**
+- "Here are 46 types of plugs"
+- "Check each product specification"
+- "Call us and we'll help you"
+
+Gap between user mental model and IA is why search fails. Taxonomy designed for catalog management, not customer discovery.
+
+### The Brand Confusion
+
+Beckett products appear on Cleartec site. Company name is MOCAP but products on other sites. No unified navigation across brands.
+
+> "Most confusing thing is that the company name is MOCAP, the packaging products are Beckett which can be found on the Cleartec website."
+
+Architecture optimized for operational convenience, not customer understanding.
+
+---
+
+## Recommended IA Structure
+
+### Multi-Path Framework
+
+No single navigation path serves all users. Build multiple entry points for different mental models:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│              MOCAP.DOMAIN.COM HOMEPAGE                  │
+│                                                         │
+│   Four Entry Paths (User Choice):                       │
+│                                                         │
+│   1. I Know My Part Number                              │
+│      └─ Search: RVC9044 → Direct result                 │
+│                                                         │
+│   2. Browse by Application                              │
+│      └─ Thread Protection → Powder Coating →            │
+│          Recommended products                           │
+│                                                         │
+│   3. Browse by Product Type                             │
+│      └─ Caps → Vinyl Caps → Round → Size selection      │
+│                                                         │
+│   4. Browse by Industry                                 │
+│      └─ Automotive → Paint Protection → Products        │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Path 1: Part Number Search (Veterans - 30%)
+
+**Target user:** Knows exact SKU, needs speed
+**Behavior:** Types part number, expects instant match
+
+```
+┌───────────────────────────────────────┐
+│  I KNOW MY PART NUMBER                │
+│                                       │
+│  ┌─────────────────────────────────┐  │
+│  │ RVC9044                      🔍 │  │
+│  └─────────────────────────────────┘  │
+│                                       │
+│  → Instant result with:               │
+│     - Product image                   │
+│     - Specifications                  │
+│     - Stock status                    │
+│     - Pricing (if logged in)          │
+│     - Add to Cart button              │
+│                                       │
+│  → Variant table below                │
+│     (if multiple sizes/colors)        │
+└───────────────────────────────────────┘
+```
+
+No navigation chrome. No distractions. Search → Result → Cart.
+
+### Path 2: Application Hierarchy (Problem Solvers - 50%)
+
+**Target user:** Knows what needs protecting, not product names
+**Behavior:** Thinks "I need to protect threads during painting"
+
+**Level 1: Primary Applications**
+```
+Thread Protection
+Surface Protection
+End Protection
+Shipping Protection
+```
+
+**Level 2: Use Cases**
+```
+Thread Protection →
+  - Powder Coating
+  - Painting
+  - Plating/Anodizing
+  - Storage/Transit
+  - Installation
+```
+
+**Level 3: Product Recommendations**
+```
+Powder Coating →
+  Primary: High-temp silicone caps (400°F+)
+  Alternative: Tapered vinyl plugs (250°F)
+  Related: X-Treme masking tape
+```
+
+Each level narrows focus. Educational content explains why certain products fit certain uses.
+
+### Path 3: Product Type Taxonomy (Problem Solvers - 50%)
+
+**Target user:** Knows general category, needs to narrow by specs
+**Behavior:** "I need a cap, probably vinyl, for 1/2-inch diameter"
+
+**Level 1: Product Categories**
+```
+Caps & Plugs
+  - Caps, Vinyl (round, tapered, flanged)
+  - Caps, Plastic (threaded, snap-on, push-on)
+  - Plugs, Button & Pull Tab
+  - Plugs, Universal Sizing
+
+Tubes & Closures (Cleartec)
+  - Clear Tubes
+  - End Caps for Tubes
+  - Custom Packaging
+
+Tool Protection (Beckett)
+  - End Mills & Inserts
+  - Taps & Drills
+  - Saws & Cutters
+```
+
+**Level 2: Filterable Product Tables**
+
+Land on "Caps, Vinyl" → See interactive table with filters:
+- Shape (round, tapered, flanged)
+- Size range (ID, OD, length)
+- Material (vinyl, silicone, PVC)
+- Temperature rating
+- Color
+- Features (pull tab, flanged, FDA)
+
+### Path 4: Industry/Use Case Pages (Explorers - 20%)
+
+**Target user:** Researching solutions, needs education
+**Behavior:** "What do automotive manufacturers use?"
+
+**Landing page structure:**
+```
+AUTOMOTIVE INDUSTRY SOLUTIONS
+
+[Hero image: Automotive assembly line]
+
+Common Challenges:
+  - Paint overspray protection
+  - Thread damage during transport
+  - Parts organization in warehouses
+  - Clean room contamination
+
+Our Solutions:
+
+  1. Paint Masking
+     Products: High-temp vinyl caps, X-Treme tape
+     Use case: Mask threaded openings during paint booth
+     Temperature: Up to 400°F
+     [View products]
+
+  2. Thread Protection
+     Products: Tapered plugs, flanged caps
+     Use case: Protect threads during shipping
+     Material: Durable vinyl, various colors
+     [View products]
+
+Case Study: [Customer story]
+Downloads: [Application guide PDF]
+```
+
+Educational first, transactional second. Build trust through expertise.
+
+---
+
+## Navigation Model
+
+### Global Navigation (All Brands)
+
+**Desktop mega-menu:**
+```
+┌──────────────────────────────────────────────────────────┐
+│ MOCAP                                    🔍 Search  Cart │
+├──────────────────────────────────────────────────────────┤
+│ Products | Applications | Industries | Support | Account │
+└──────────────────────────────────────────────────────────┘
+
+Hover "Products" →
+
+┌────────────────────┬─────────────────────┬──────────────┐
+│ BY PRODUCT TYPE    │ BY APPLICATION      │ QUICK ACCESS │
+├────────────────────┼─────────────────────┼──────────────┤
+│ Caps & Plugs       │ Thread Protection   │ Best Sellers │
+│ • Vinyl Caps       │ Surface Protection  │ New Products │
+│ • Plastic Caps     │ Powder Coating      │ Sample Kits  │
+│ • Button Plugs     │ Painting & Plating  │              │
+│                    │ Shipping            │ [Part Search]│
+│ Dip-Molding        │                     │ RVC9044  🔍  │
+│ • Vinyl Dip Caps   │ Industry Pages:     │              │
+│ • Custom Shapes    │ • Automotive        │              │
+│                    │ • Aerospace         │              │
+│ View All →         │ • Industrial        │              │
+└────────────────────┴─────────────────────┴──────────────┘
+```
+
+Visual tiles with product images in mega-menu. Not text-only.
+
+**Mobile navigation:**
+```
+☰ Menu
+
+Tapping hamburger reveals:
+
+┌──────────────────────────────┐
+│ 🔍 Search...                 │
+├──────────────────────────────┤
+│ → I Know My Part Number      │
+├──────────────────────────────┤
+│ Products                 ▸   │
+│ Applications             ▸   │
+│ Industries               ▸   │
+│ Support                  ▸   │
+├──────────────────────────────┤
+│ 👤 My Account                │
+│ 🛒 Cart (2)                  │
+└──────────────────────────────┘
+```
+
+Prominent search at top. Part number entry separate. Expandable categories. Quick access to account and cart.
+
+---
+
+## Page Types
+
+### 1. Homepage (Brand-Specific)
+
+**MOCAP Homepage:**
+- Hero: "Find the perfect protective closure" with part number search prominent
+- Four entry paths (tiles): Part Number | Application | Product Type | Industry
+- Featured products carousel
+- Applications showcase (visual)
+- Trust indicators (customers, industries served)
+- Quick links (Sample kits, New products, Resources)
+
+**Cleartec Homepage:**
+- Hero: Visual showcase of clear packaging in use
+- Application tiles (Fundraising, Retail, Industrial, Custom)
+- Featured projects/case studies
+- Configurator preview
+- Trust indicators (design services, quick turnaround)
+
+Different brand priorities, different layouts.
+
+### 2. Category Pages (L1/L2)
+
+**Structure:**
+- Page title + description (SEO + clarity)
+- Category image/hero
+- Subcategory tiles (visual navigation)
+- Featured products in category
+- Filter preview
+- Educational content (use cases, materials guide)
+
+### 3. Product Family Pages (L3)
+
+**Structure:**
+- Product series name + overview
+- Hero image showing product in use
+- Key features (bullets)
+- Interactive product table (THE main content)
+- Specifications section
+- Applications section
+- Related products
+- Downloads (datasheets, CAD files)
+
+### 4. Customer Portal Pages
+
+**My Account Dashboard:**
+```
+Welcome back, [Name]
+
+Quick Actions:
+  [Reorder] [Track Shipments] [View Invoices]
+
+Recent Orders:
+  Order #12345 | Dec 1 | Delivered
+  Order #12344 | Nov 28 | In Transit
+
+Saved Items:
+  [3 products in watch list]
+
+Account Summary:
+  Negotiated pricing active
+  Carrier: UPS account #12345
+  Payment terms: Net 30
+```
+
+---
+
+## Accessibility Principles
+
+### WCAG 2.1 AA Compliance (Minimum)
+
+**Perceivable:**
+- Text contrast 4.5:1 minimum (7:1 for AAA targets)
+- Images have descriptive alt text
+- Video content has captions
+- Color not sole indicator (use icons + text)
+- Text resizable to 200% without horizontal scroll
+
+**Operable:**
+- All functionality keyboard-accessible
+- Skip links to main content
+- Focus indicators visible
+- No keyboard traps
+- Sufficient time to complete forms
+
+**Understandable:**
+- Clear, simple language (8th grade reading level)
+- Consistent navigation patterns
+- Input assistance (helpful error messages)
+- Forms with clear labels and instructions
+
+**Robust:**
+- Valid HTML5 semantic markup
+- ARIA labels where native HTML insufficient
+- Compatible with screen readers (JAWS, NVDA, VoiceOver)
+- Responsive design works with zoom/magnification
+
+### Testing Plan
+- Automated: aXe, WAVE, Lighthouse
+- Manual: Keyboard-only navigation
+- Screen readers: Test with JAWS and VoiceOver
+- Zoom: Test at 200%, 400% magnification
+- Color: Test with color blindness simulation
+- User testing: Include users with disabilities
+
+Accessibility isn't checkbox compliance. It's design quality.

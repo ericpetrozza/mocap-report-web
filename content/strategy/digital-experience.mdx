@@ -1,0 +1,258 @@
+# Digital Experience Strategy & Vision
+
+## UX Strategy Overview
+
+The website must transform from operational burden to revenue driver. Current state forces manual workarounds, creates customer frustration, blocks self-service. New state enables independence, transparency, speed.
+
+This requires simultaneous evolution across four layers:
+
+### Foundation Layer: Fix What's Broken
+- Search that returns results
+- Data that reflects reality
+- Analytics that measure behavior
+- Performance that inspires confidence
+
+### Enablement Layer: Build Self-Service
+- Portal for order visibility
+- Pricing transparency for logged-in users
+- Stock visibility for planning
+- Carrier accounts for seamless ordering
+
+### Optimization Layer: Reduce Friction
+- Interactive tables users can manipulate
+- Multi-path navigation for different mental models
+- Configurators that guide decisions
+- Mobile parity for on-the-go access
+
+### Growth Layer: Drive Value
+- Reorder flows for repeat buyers
+- Sample requests integrated with purchase
+- Educational content for explorers
+- Guided discovery for problem solvers
+
+These layers build on each other. Can't optimize friction until self-service works. Can't enable self-service until foundation is fixed.
+
+---
+
+## The Consolidation Question
+
+Current state: Three separate websites, 31 regional domains, fragmented customer experience.
+
+Three architectural approaches emerged from research:
+
+### Option A: Complete Separation
+**Structure:** MOCAP.com, Cleartec.com, Beckett.com remain independent
+
+| Pros | Cons |
+|------|------|
+| Brand clarity preserved | Duplicate development |
+| Minimal disruption | Fragmented customer data |
+| Independent optimization | No cross-sell |
+| | SEO dilution |
+
+**Stakeholder support:** Low. Only 2 of 28 saw this as viable path forward.
+
+### Option B: Full Consolidation
+**Structure:** Single MOCAP.com with all brands, unified navigation, shared cart
+
+| Pros | Cons |
+|------|------|
+| Maximum efficiency | Brand dilution risk |
+| Unified data | Complex IA |
+| Cross-sell enabled | One-size-fits-all UX |
+| SEO consolidated | Navigation overload |
+
+**Stakeholder support:** Moderate. 40% favor this approach, especially operations and IT.
+
+### Option C: Hybrid Platform (Recommended)
+**Structure:** One technical platform, brand-specific experiences
+
+| Pros | Cons |
+|------|------|
+| Technical efficiency + brand preservation | More complex to design |
+| Cross-sell possible | Requires thoughtful IA |
+| Flexible optimization | Slightly higher initial dev cost |
+
+**Stakeholder support:** Strong. 58% prefer this once explained, aligns with Apple model.
+
+---
+
+## Recommended Approach: Hybrid Platform
+
+**Technical foundation:** One codebase, one database, one ERP middleware, one analytics property
+
+**Experience layer:** Brand-specific theming, IA, configurators, navigation
+
+### Implementation Options
+
+**Option C1: Brand Subdomains (Recommended)**
+```
+mocap.domain.com
+cleartec.domain.com
+beckett.domain.com
+xtreme.domain.com
+```
+Clear brand separation in URL. Shared backend. Cross-brand search optional. SEO benefit from domain authority.
+
+**Option C2: Brand Paths**
+```
+domain.com/mocap
+domain.com/cleartec
+domain.com/beckett
+domain.com/xtreme
+```
+Unified domain. Easier cross-brand navigation. Simpler analytics. Stronger SEO consolidation.
+
+### What "Hybrid" Means in Practice
+
+**Shared Infrastructure (Invisible to Users):**
+- Single Magento instance
+- Unified product database
+- Shared customer accounts (optional single login)
+- Consolidated ERP middleware
+- One GA4 property (with brand filters)
+- Shared payment processing
+- Unified order management
+
+**Brand-Specific Experience (Visible to Users):**
+- Custom theme per brand
+- Brand-specific homepage
+- Tailored navigation structure
+- Custom configurators (Cleartec tubes, Beckett tools)
+- Brand voice in copy
+- Unique visual design
+- Optimized mobile layouts
+
+---
+
+## Main UX Principles
+
+### 1. Speed Over Perfection
+
+Veterans want speed. They know exactly what they need. Every click is friction.
+
+**Design for:**
+- Instant part number match in search
+- Skip-the-queue "I Know My Part Number" entry
+- One-click reorder from history
+- Inline cart actions in tables
+- Express checkout with saved payment
+
+**Don't force:**
+- Guided wizards on users who don't need them
+- Required configurators for known parts
+- Multiple page navigation for simple purchases
+- Account creation when guest checkout works
+
+### 2. Guide the Uncertain
+
+Problem Solvers and Explorers need guidance. They don't know taxonomy. They think in applications, not product codes.
+
+**Design for:**
+- Application-based navigation ("Protect during painting")
+- Progressive disclosure in configurators
+- Educational content at decision points
+- "Not sure? Here's what others like you ordered"
+- Visual examples showing use cases
+
+**Don't assume:**
+- Users know difference between "cap" and "plug"
+- Technical specs are meaningful without context
+- Product hierarchy is obvious
+- Material properties are understood
+
+### 3. Make Tables Tools, Not Displays
+
+Users interact with tables expecting spreadsheet behavior. Current static tables frustrate this mental model.
+
+**Design for:**
+- Sortable columns (any attribute)
+- Filterable rows (multi-select)
+- Searchable content (instant filter)
+- Inline actions (cart, sample, compare)
+- Visible row count ("Showing 47 of 185 variants")
+
+**Include:**
+- Clear active filter indicators
+- Reset filters button
+- Column visibility toggle (hide/show attributes)
+- Export to CSV option for technical buyers
+- Imperial/metric toggle for MOCAP
+
+### 4. Mobile Parity, Zero Compromise
+
+Mobile users are buyers, not just researchers. One-third of traffic. Growing.
+
+**Design for:**
+- Touch targets 44px minimum
+- Thumb-zone primary actions
+- No hover-required interactions
+- Vertical scrolling over horizontal
+- Progressive disclosure (expand/collapse)
+
+**Test for:**
+- Forms completable on phone
+- Tables usable on tablet
+- Search functional with autocomplete
+- Images high-res but fast-loading
+- Checkout flow mobile-optimized
+
+### 5. Transparency Builds Trust
+
+Data accuracy crisis eroded trust. Every stock display, price, lead time is now suspect. Users call to verify.
+
+**Rebuild trust through:**
+- Real-time stock numbers (not cached)
+- Clear warehouse location
+- Honest lead times
+- "Updated 5 minutes ago" timestamps
+- "Call us if you need it sooner" options
+
+**Never show:**
+- Stock if ERP sync is stale
+- Pricing if it might be wrong
+- Delivery estimates if warehouse isn't confirmed
+- Vague "available soon" without date
+
+**If data is uncertain, say so:**
+- "Stock updating, call for current availability"
+- "Custom configuration, contact for quote"
+- "Lead time varies, we'll confirm after order"
+
+Honesty > false certainty.
+
+### 6. Progressive Disclosure Reduces Overload
+
+MOCAP catalog has 85 series, ~66,000 variants. Showing everything at once overwhelms.
+
+**Design for:**
+- Start broad, narrow progressively
+- Show 10-20 results, expand with interaction
+- Collapse advanced options initially
+- Reveal complexity as needed
+- Provide escape hatches ("Start over", "View all")
+
+**Avoid:**
+- All filters visible on page load
+- 320-variant tables without grouping
+- Configuration screens with 12 simultaneous choices
+- Mega-menus with every possible option
+
+### 7. Self-Service with Safety Net
+
+Enable independence, but never leave users stranded.
+
+**Design for:**
+- Clear "Need help? Call us" presence
+- Contextual assistance ("What's this?" tooltips)
+- Escape to human ("Talk to specialist")
+- Sample options when uncertain
+- "Recommended for you" based on behavior
+
+**Never force:**
+- Self-service on complex custom orders
+- Automated responses when call is better
+- Configuration when consultation needed
+- Account creation to get assistance
+
+Portal and search enable independence. Phone number provides safety.

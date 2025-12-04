@@ -1,0 +1,543 @@
+# Sitemap & Navigation Structure
+
+## Current State: Fragmentation Across 31 Domains
+
+The existing structure creates confusion and limits growth:
+
+**Domain Structure Today:**
+```
+Main Store Domains (5):
+  - mocap.com
+  - cleartecpackaging.com
+  - beckettpackaging.com
+  - x-tremetape.com
+  - MOCAPtech.com (old, redirects)
+
+Regional Domains (27+):
+  - mocap.co.uk
+  - mocap-france.com
+  - mocap.ca
+  - cleartecpackaging.co.uk
+  - [23 more regional variants...]
+
+Total: 31+ domains with fragmented content
+```
+
+**Problems this creates:**
+- SEO dilution (authority split across domains)
+- Content duplication and maintenance burden
+- Analytics fragmentation (cross-domain tracking broken)
+- Customer confusion (which site to use?)
+- Brand inconsistency
+- Separate inventory systems per domain
+
+---
+
+## Proposed Structure: Unified Platform, Brand-Specific Experiences
+
+### URL Architecture: Brand Subdomains
+
+**Recommended approach:**
+```
+Primary Structure:
+  mocap.domain.com        (MOCAP flagship)
+  cleartec.domain.com     (Cleartec packaging)
+  beckett.domain.com      (Beckett tool protection)
+  xtreme.domain.com       (X-Treme Tape)
+
+Regional Subdomains:
+  uk.mocap.domain.com
+  fr.mocap.domain.com
+  ca.mocap.domain.com
+  mx.mocap.domain.com
+  cn.mocap.domain.com
+
+Example URLs:
+  mocap.domain.com/caps-and-plugs/vinyl-caps/rvc-series
+  uk.mocap.domain.com/caps-and-plugs/vinyl-caps/rvc-series
+  cleartec.domain.com/clear-tubes/2-inch-tubes
+  xtreme.domain.com/high-temp-pipe-repair
+```
+
+**Why brand subdomains?**
+- Clear brand identity in URL
+- SEO benefit (domain authority rolls up)
+- Technical simplicity (single platform, brand filtering)
+- User clarity (lands on "cleartec.domain.com", knows where they are)
+- Analytics consolidation (single property, brand dimension)
+- Cross-brand linking enabled
+
+**Alternative: Brand Paths** (domain.com/mocap, domain.com/cleartec)
+- Simpler URL structure
+- Stronger SEO consolidation
+- But less brand distinction
+- Brand switching less intuitive
+
+**Recommendation:** Brand subdomains for brand clarity while maintaining technical unity.
+
+---
+
+## Homepage Structure (Brand-Specific)
+
+Each brand subdomain gets tailored homepage:
+
+### MOCAP Homepage (mocap.domain.com)
+
+```
+┌──────────────────────────────────────────────────────┐
+│ MOCAP Logo                        🔍 Search  🛒 Cart │
+│                                                      │
+│ Products | Applications | Industries | Support      │
+└──────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│ HERO SECTION                                         │
+│                                                      │
+│ Find the Perfect Protective Closure                 │
+│                                                      │
+│ ┌────────────────────────────────────────────────┐  │
+│ │ 🔍 Enter part number or description...        │  │
+│ └────────────────────────────────────────────────┘  │
+│                                                      │
+│ [I Know My Part Number] or [Browse by Application]  │
+└──────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│ MULTI-PATH NAVIGATION                                │
+├───────────────┬───────────────┬───────────────┬──────┤
+│ [Icon]        │ [Icon]        │ [Icon]        │[Icon]│
+│ Shop by       │ Shop by       │ Shop by       │ I    │
+│ Product       │ Application   │ Industry      │ Know │
+│ Type          │               │               │ My # │
+│               │               │               │      │
+│ Browse caps,  │ Find products │ Solutions by  │Quick │
+│ plugs, tapes  │ for specific  │ market sector │search│
+│               │ use cases     │               │      │
+└───────────────┴───────────────┴───────────────┴──────┘
+
+┌──────────────────────────────────────────────────────┐
+│ TOP CATEGORIES (Visual Tiles)                        │
+├─────────────────┬─────────────────┬──────────────────┤
+│ [Image]         │ [Image]         │ [Image]          │
+│ Vinyl Caps      │ Thread          │ High-Temp        │
+│ & Plugs         │ Protectors      │ Masking          │
+│ 2,195 products  │ 340 products    │ 156 products     │
+└─────────────────┴─────────────────┴──────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│ FEATURED PRODUCTS                                    │
+│ [Carousel of 6-8 best-sellers with images/prices]   │
+└──────────────────────────────────────────────────────┘
+
+┌──────────────────────────────────────────────────────┐
+│ TRUST INDICATORS                                     │
+│ ✓ 4,000+ customers worldwide                        │
+│ ✓ ISO 9001 certified                                │
+│ ✓ 70+ years in protective closures                  │
+│ ✓ Ships same day (orders by noon EST)              │
+└──────────────────────────────────────────────────────┘
+```
+
+### Cleartec Homepage (cleartec.domain.com)
+
+```
+Different visual design:
+  - More colorful, design-forward
+  - Visual product showcase (lifestyle images)
+  - Emphasis on customization and printing
+  - Application tiles (Retail, Fundraising, Gifts)
+  - Featured case studies
+  - Configurator preview ("Build Your Tube")
+```
+
+### Beckett Homepage (beckett.domain.com)
+
+```
+Industrial aesthetic:
+  - Tool protection focus
+  - Browse by tool type tiles
+  - Dimension-based finder prominent
+  - B2B messaging (durability, organization)
+  - Featured products for specific tools
+```
+
+### X-Treme Homepage (xtreme.domain.com)
+
+```
+Problem/solution focus:
+  - "What do you need to fix?" hero
+  - Application cards (Plumbing, Automotive, Electrical)
+  - Video demonstrations prominent
+  - Temperature rating badge
+  - Simple color selector
+  - Educational content ("How it works")
+```
+
+Same technical platform. Different experiences. Each optimized for audience.
+
+---
+
+## Global Navigation Structure
+
+### Desktop Mega Menu (MOCAP example)
+
+```
+┌──────────────────────────────────────────────────────┐
+│ MOCAP Logo         🔍 Search...          🛒 Cart (3) │
+├──────────────────────────────────────────────────────┤
+│ Products | Applications | Industries | Resources     │
+│                                      | Account       │
+└──────────────────────────────────────────────────────┘
+
+Hover "Products" →
+
+┌────────────────────────────────────────────────────────┐
+│ SHOP BY PRODUCT TYPE          SHOP BY APPLICATION     │
+├──────────────┬────────────────┼────────────────────────┤
+│ Caps & Plugs │ [Image tiles  │ Thread Protection      │
+│ • Vinyl Caps │  for each     │ • Powder Coating       │
+│ • Plastic    │  subcategory] │ • Painting & E-Coat    │
+│ • Silicone   │               │ • Plating              │
+│ • Threaded   │               │                        │
+│              │               │ Surface Protection     │
+│ Dip Molding  │               │ • Shipping/Storage     │
+│ • Vinyl Dips │               │ • Installation         │
+│ • Custom     │               │                        │
+│              │               │ QUICK LINKS            │
+│ Masking Tape │               │ • Sample Kits          │
+│ • X-Treme    │               │ • New Products         │
+│              │               │ • Best Sellers         │
+│ [View All →] │               │ • Clearance            │
+└──────────────┴────────────────┴────────────────────────┘
+```
+
+Mega menu shows structure clearly. Visual tiles. Multiple entry paths visible at once.
+
+### Mobile Navigation
+
+```
+☰ Menu
+
+Expanding reveals:
+
+┌────────────────────────────────────┐
+│ ┌────────────────────────────────┐│
+│ │ 🔍 Search...                   ││
+│ └────────────────────────────────┘│
+├────────────────────────────────────┤
+│ → I Know My Part Number            │
+├────────────────────────────────────┤
+│ Products                       ▸   │
+│ Applications                   ▸   │
+│ Industries                     ▸   │
+│ Resources                      ▸   │
+├────────────────────────────────────┤
+│ 👤 My Account                      │
+│    • Orders                        │
+│    • Invoices                      │
+│    • Saved Items                   │
+│    • Settings                      │
+├────────────────────────────────────┤
+│ 🛒 Cart (3 items)                  │
+├────────────────────────────────────┤
+│ ☎ Contact Us                       │
+│ 🌐 Region: US [Change]             │
+└────────────────────────────────────┘
+```
+
+Hamburger reveals drawer. Search at top. Part number entry prominent. Expandable categories.
+
+---
+
+## Site Hierarchy & Page Types
+
+**Level 0: Homepage**
+```
+mocap.domain.com/
+```
+
+**Level 1: Primary Category Pages**
+```
+mocap.domain.com/caps-and-plugs
+mocap.domain.com/applications
+mocap.domain.com/industries
+mocap.domain.com/resources
+mocap.domain.com/account
+```
+
+**Level 2: Secondary Category Pages**
+```
+Products path:
+  mocap.domain.com/caps-and-plugs/vinyl-caps
+  mocap.domain.com/caps-and-plugs/plastic-caps
+  mocap.domain.com/caps-and-plugs/threaded-plugs
+
+Applications path:
+  mocap.domain.com/applications/thread-protection
+  mocap.domain.com/applications/powder-coating
+  mocap.domain.com/applications/surface-protection
+
+Industries path:
+  mocap.domain.com/industries/automotive
+  mocap.domain.com/industries/hvac
+  mocap.domain.com/industries/furniture
+```
+
+**Level 3: Product Series/Family Pages**
+```
+mocap.domain.com/caps-and-plugs/vinyl-caps/rvc-series
+mocap.domain.com/caps-and-plugs/vinyl-caps/tapered-caps
+
+This is the primary landing page for products
+Contains interactive table with all variants
+```
+
+**Level 4: Individual Product Pages** (Optional, for complex items)
+```
+mocap.domain.com/caps-and-plugs/vinyl-caps/rvc-series/rvc-0750r
+
+Only used when individual variant needs extensive explanation
+Most products don't need this level
+Table on Level 3 page is sufficient
+```
+
+**Special Pages:**
+```
+mocap.domain.com/account/dashboard
+mocap.domain.com/account/orders
+mocap.domain.com/account/orders/12345
+mocap.domain.com/account/invoices
+mocap.domain.com/quick-reorder
+mocap.domain.com/sample-request
+mocap.domain.com/resources/learning-center
+mocap.domain.com/resources/technical-library
+```
+
+---
+
+## Complete Sitemap (MOCAP Brand)
+
+```
+MOCAP.DOMAIN.COM
+│
+├── PRODUCTS
+│   ├── Caps & Plugs
+│   │   ├── Vinyl Caps
+│   │   │   ├── Round Vinyl Caps (RVC Series)
+│   │   │   ├── Tapered Vinyl Caps (TVC Series)
+│   │   │   ├── Flanged Vinyl Caps (FVC Series)
+│   │   │   └── High-Temp Vinyl Caps (HTV Series)
+│   │   ├── Plastic Caps
+│   │   │   ├── Threaded Plastic Caps (TPC Series)
+│   │   │   ├── Snap-On Plastic Caps (SPC Series)
+│   │   │   └── Push-On Plastic Caps (PPC Series)
+│   │   ├── Silicone Plugs
+│   │   │   ├── High-Temp Silicone Plugs (500°F+)
+│   │   │   └── Tapered Silicone Plugs
+│   │   ├── Button & Pull-Tab Plugs
+│   │   └── Universal Sizing Plugs
+│   ├── Dip Molding Products
+│   │   ├── Vinyl Dip Caps
+│   │   ├── Handle Grips
+│   │   └── Custom Dip Molding
+│   ├── Masking Solutions
+│   │   ├── X-Treme Tape (all variants)
+│   │   └── High-Temp Masking Caps
+│   └── View All Products
+│
+├── APPLICATIONS
+│   ├── Thread Protection
+│   │   ├── Powder Coating Masking
+│   │   ├── Painting & E-Coating
+│   │   ├── Plating & Anodizing
+│   │   └── Shipping & Storage
+│   ├── Surface Protection
+│   │   ├── Hydraulic Fittings
+│   │   ├── Furniture Manufacturing
+│   │   └── Installation Protection
+│   ├── Sealing & Closure
+│   └── View All Applications
+│
+├── INDUSTRIES
+│   ├── Automotive Manufacturing
+│   ├── HVAC & Refrigeration
+│   ├── Furniture & Cabinetry
+│   ├── Hydraulics & Pneumatics
+│   ├── Industrial Equipment
+│   ├── Medical Devices
+│   └── View All Industries
+│
+├── RESOURCES
+│   ├── Learning Center
+│   │   ├── How-To Guides
+│   │   ├── Product Selection Tools
+│   │   ├── Material Properties
+│   │   └── Video Library
+│   ├── Technical Library
+│   │   ├── Datasheets
+│   │   ├── CAD Models
+│   │   ├── Certifications (ISO, RoHS, FDA)
+│   │   └── Chemical Resistance Charts
+│   ├── Support
+│   │   ├── FAQs
+│   │   ├── Returns & Exchanges
+│   │   ├── Shipping Information
+│   │   └── Contact Us
+│   └── Company
+│       ├── About MOCAP
+│       ├── Quality & Certifications
+│       ├── Locations
+│       └── Careers
+│
+├── ACCOUNT (Logged-In Only)
+│   ├── Dashboard
+│   │   ├── Recent Orders
+│   │   ├── Quick Reorder
+│   │   └── Saved Items
+│   ├── Orders
+│   │   ├── Order History
+│   │   ├── Track Shipments
+│   │   └── Order Details
+│   ├── Invoices
+│   │   ├── View All Invoices
+│   │   └── Download Invoices
+│   ├── Account Settings
+│   │   ├── Profile
+│   │   ├── Shipping Addresses
+│   │   ├── Payment Methods
+│   │   ├── Carrier Accounts
+│   │   └── Users & Permissions
+│   └── Support
+│       ├── Open Tickets
+│       └── Contact Sales Rep
+│
+├── SPECIAL PAGES
+│   ├── Search Results
+│   ├── Quick Reorder (bulk entry)
+│   ├── Sample Request
+│   ├── Quote Request
+│   ├── Product Comparison
+│   └── Configurator (brand-specific)
+│
+├── CHECKOUT FLOW
+│   ├── Shopping Cart
+│   ├── Checkout - Shipping
+│   ├── Checkout - Payment
+│   └── Order Confirmation
+│
+└── FOOTER LINKS
+    ├── All Products (A-Z)
+    ├── Site Map
+    ├── Privacy Policy
+    ├── Terms & Conditions
+    ├── Accessibility Statement
+    └── Cookie Preferences
+```
+
+---
+
+## Footer Structure
+
+Consistent across all brands, adapted for content:
+
+```
+┌────────────────────────────────────────────────────────┐
+│ FOOTER                                                 │
+├─────────────┬─────────────┬─────────────┬──────────────┤
+│ PRODUCTS    │ RESOURCES   │ ACCOUNT     │ COMPANY      │
+├─────────────┼─────────────┼─────────────┼──────────────┤
+│ Caps & Plugs│ Learning    │ My Account  │ About MOCAP  │
+│ Dip Molding │ Center      │ Orders      │ Locations    │
+│ Masking     │ Technical   │ Invoices    │ Certifications│
+│ View All    │ Library     │ Support     │ Contact Us   │
+│             │ FAQs        │ Login       │ Careers      │
+├─────────────┼─────────────┼─────────────┼──────────────┤
+│ APPLICATIONS│ SUPPORT     │ QUICK LINKS │ CONNECT      │
+├─────────────┼─────────────┼─────────────┼──────────────┤
+│ Thread      │ Contact Us  │ Sample Kits │ LinkedIn     │
+│ Protection  │ Returns     │ New Products│ YouTube      │
+│ Powder      │ Shipping    │ Quick Reorder│ Facebook    │
+│ Coating     │ International│ Compare     │              │
+│ View All    │             │             │              │
+└─────────────┴─────────────┴─────────────┴──────────────┘
+┌────────────────────────────────────────────────────────┐
+│ © 2025 MOCAP. All rights reserved.                    │
+│ Privacy Policy | Terms | Accessibility | Cookie Prefs  │
+│                                                        │
+│ 🌐 United States (English) [Change]                   │
+└────────────────────────────────────────────────────────┘
+```
+
+SEO-friendly footer links. Legal compliance. Region selector.
+
+---
+
+## Cross-Brand Navigation
+
+Users on one brand site should easily discover other brands:
+
+**Subtle Cross-Brand Presence:**
+```
+In header (MOCAP site):
+
+┌──────────────────────────────────────────────────────┐
+│ MOCAP                                                │
+│                                                      │
+│ Also from MOCAP:                                     │
+│ [Cleartec] [Beckett] [X-Treme]                       │
+└──────────────────────────────────────────────────────┘
+```
+
+Small links to sister brands. Not prominent (avoid diluting focus) but discoverable.
+
+**In search results:**
+```
+Searching on mocap.domain.com for "clear tubes"
+
+Results include:
+  → MOCAP products (primary)
+  → "Also see: Cleartec Clear Tubes" (secondary)
+
+Click takes to cleartec.domain.com
+```
+
+**Product cross-sell:**
+```
+On MOCAP high-temp cap page:
+
+"Complete your masking solution:"
+[X-Treme Tape] → links to xtreme.domain.com
+```
+
+Let products naturally lead to sister brands when relevant.
+
+---
+
+## Regional/International Structure
+
+**URL Pattern:**
+```
+Region Subdomain + Brand Subdomain:
+
+us.mocap.domain.com (or just mocap.domain.com)
+uk.mocap.domain.com
+fr.mocap.domain.com
+de.mocap.domain.com
+ca.mocap.domain.com
+mx.mocap.domain.com
+cn.mocap.domain.com
+```
+
+**Regional Adaptations:**
+- Language (header selector: English → Français, Deutsch)
+- Currency (USD, GBP, EUR, CAD, MXN, CNY)
+- Warehouse/stock (show local warehouse inventory)
+- Shipping methods (local carriers)
+- Legal compliance (VAT, GDPR, local regulations)
+- Phone numbers and support hours
+- Payment methods (region-specific)
+
+**Content:**
+- Shared product catalog (same SKUs)
+- Translated descriptions (professional translation)
+- Regional landing pages (local case studies, customers)

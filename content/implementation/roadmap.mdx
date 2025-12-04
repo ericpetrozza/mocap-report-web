@@ -1,0 +1,519 @@
+# Roadmap
+
+**PRIORITY ORDER ONLY** (No dates or time ranges)
+
+This roadmap is sequenced by dependencies, risk, and strategic value. Each phase builds on the previous. Timing will depend on platform selection, resource availability, and blocking decisions.
+
+---
+
+## Phase 0: Foundation (Must Complete Before Development)
+
+These aren't features. They're decisions and data fixes that block everything else.
+
+### Critical Blocking Decisions
+
+**Decision 1: Brand Architecture**
+```
+Options:
+  A. Complete separation (3-4 independent sites)
+  B. Full consolidation (single unified site)
+  C. Hybrid platform (shared backend, brand experiences)
+
+Recommendation: Option C (Hybrid with brand subdomains)
+
+Why blocking: URL structure, navigation design,
+             analytics setup all depend on this
+
+Decision deadline: Must resolve before any design work
+```
+
+**Decision 2: Regional Rollout Strategy**
+```
+Options:
+  A. US-first launch, then international
+  B. Simultaneous global launch
+  C. Priority market launch (US + UK), then expand
+
+Recommendation: Option A (US-first to prove foundation)
+
+Why blocking: Impacts MVP scope, translation requirements,
+            warehouse integration, payment gateways
+
+Tradeoff: US-first = Europe pain continues temporarily
+         BUT simpler MVP, faster to market, prove value
+```
+
+**Decision 3: Sample Request Policy**
+```
+Current: No clear policy, inconsistent limits
+
+Questions requiring answers:
+  - Limit per customer per period?
+  - Limit per product type?
+  - Approval workflow required?
+  - First-time vs. repeat customer differences?
+  - Shipping costs (customer pays? free?)?
+
+Recommendation: 5 samples per product series per month,
+              free shipping, auto-approve for registered customers
+
+Why blocking: Can't build sample feature without policy
+```
+
+**Decision 4: Platform Selection**
+```
+Options being evaluated:
+  A. Magento 2 (current, but requires major customization)
+  B. BigCommerce B2B
+  C. Shopify Plus (eliminated - 4 decimal pricing issue)
+  D. Custom build
+
+Requirements:
+  - 320+ variants per product
+  - 4-decimal pricing ($0.1234/ea)
+  - Kit items with dependencies
+  - Tiered pricing by customer
+  - 3 ERP integrations
+  - Regional pricing/currency
+  - Carrier account integration
+
+Recommendation: Evaluate BigCommerce B2B vs Magento 2
+
+Why blocking: All technical design depends on platform
+            capabilities and constraints
+```
+
+**Decision 5: MVP Scope Lock**
+```
+Stakeholders want 50+ features
+Budget/timeline allows 5-7
+
+Must formally agree on:
+  - Tier 1 (launch blockers): 5 features
+  - Tier 2 (nice-to-have): 2 features
+  - Everything else (Phase 1+ or later)
+
+Get signed agreement from leadership
+Lock scope to prevent creep
+
+Why blocking: Without scope discipline, project extends
+            indefinitely and nothing launches
+```
+
+### Data Quality Foundation (Critical Path)
+
+**Data Audit**
+```
+Audit scope:
+  ✓ Completeness (missing descriptions, specs, dimensions)
+  ✓ Accuracy (ERP sync validation)
+  ✓ Consistency (format standardization)
+  ✓ Enrichment opportunities (applications, benefits)
+
+Output: Spreadsheet identifying gaps by severity
+
+Beckett priorities:
+  - 440 product descriptions (100% empty)
+  - 440 application fields (100% empty)
+  - 67% material specs missing
+
+Cleartec priorities:
+  - 62% material specs missing
+  - 76% ID/OD dimensions missing
+  - Closure compatibility matrix creation
+
+MOCAP priorities:
+  - 54% descriptions lack benefits
+  - Thread spec completion
+  - Application context addition
+
+X-Treme priorities:
+  - Color usage guidance
+  - Application expansion
+  - Comparison content
+```
+
+**Data Remediation**
+```
+Writing priorities:
+  1. Beckett (440 descriptions from scratch)
+  2. MOCAP benefit statements (1,200+ to enhance)
+  3. Cleartec specs completion (200+ records)
+  4. Application context (all brands)
+
+Format: [What + Does + Where + Why + How]
+
+Resources required:
+  - Product managers (subject matter experts)
+  - Technical writer (consistency)
+  - Copywriter (benefit-focused language)
+  - Data entry (bulk updates)
+
+Validation:
+  - Random sample review (10% of each brand)
+  - Stakeholder approval
+  - Final ERP upload
+```
+
+**Ongoing: Data Governance Standards**
+```
+Establish process for future:
+  - New product template (required fields)
+  - Approval workflow before ERP entry
+  - Regular audit schedule (quarterly)
+  - Responsibility assignment (who owns what)
+
+Without governance, data degrades again
+This is foundation for long-term success
+```
+
+### Analytics Implementation
+
+**GA4 Rebuild**
+```
+Current state: Broken cross-domain tracking,
+             no enhanced ecommerce,
+             search tracking dead
+
+New implementation:
+  ✓ Single GA4 property (all brands)
+  ✓ Brand dimension (filter by brand)
+  ✓ Enhanced ecommerce (full funnel)
+  ✓ Search tracking (queries, results, clicks)
+  ✓ Custom events (samples, configurators, filters)
+  ✓ User ID tracking (logged-in customers)
+
+Backup: BigQuery export (raw data retention)
+
+Test thoroughly before launch
+Can't optimize what can't measure
+```
+
+---
+
+## Phase 1: MVP Launch (Tier 1 Critical Features)
+
+Once foundation is complete, build minimum viable product with five critical features.
+
+### Priority 1A: Customer Portal - Orders & Tracking
+
+**Why first:** 100% stakeholder consensus, 50%+ CS call driver, foundation for other features
+
+**Core capabilities:**
+```
+MVP Portal Features:
+
+1. Order History
+   - List all past orders
+   - Filter by date range
+   - Search by product/order number
+   - Sort by date/status
+
+2. Order Details
+   - Full order breakdown
+   - Item list with quantities/prices
+   - Shipping information
+   - Payment details
+
+3. Live Tracking
+   - Real-time shipment status
+   - Carrier tracking link
+   - Estimated delivery date
+   - Delivery confirmation
+
+4. Invoice Access
+   - View all invoices
+   - Download PDF
+   - Print functionality
+   - Email to self/others
+
+5. Simple Reorder
+   - "Reorder this order" button
+   - Adds all items to cart
+   - Preserves quantities
+```
+
+**What's NOT in MVP:**
+- Bulk reorder (multiple orders at once)
+- Order modification (change before shipping)
+- Saved carts
+- Scheduled reordering
+- Return/RMA initiation
+
+Those come in Phase 1+ enhancement.
+
+**Success metrics:**
+- Portal adoption >30% within first month
+- CS calls for order status down 25%
+- Repeat order time reduced 50%
+
+### Priority 1B: Multi-Mode Smart Search
+
+**Why next:** 91% consensus, 100% current error rate, 20-25% revenue opportunity
+
+**Core capabilities:**
+```
+MVP Search Features:
+
+1. Six Search Modes
+   - Part number (exact match)
+   - Dimensional (parse "3 inch")
+   - Application (match keywords)
+   - Material/property (filter attributes)
+   - Competitor cross-ref (database lookup)
+   - Natural language (intent parsing)
+
+2. Autocomplete
+   - Query suggestions (top 3)
+   - Product matches (top 3)
+   - Content pages (top 2)
+   - Keyboard navigable
+
+3. Search Results
+   - Faceted filtering (left sidebar)
+   - Sort options
+   - Grid/list toggle
+   - Inline cart actions
+
+4. Zero-Results Handling
+   - Helpful suggestions
+   - Alternative searches
+   - Category browse
+   - Contact specialist
+
+5. Synonym Support
+   - Common variations (cap/plug/cover)
+   - Misspellings (vynil→vinyl)
+   - Industry terms
+   - Competitor names
+```
+
+**Infrastructure:**
+- Replace custom search with Magento native Elasticsearch
+- Product data enrichment (applications, use cases)
+- Synonym dictionary (100-200 terms)
+- Search analytics tracking
+
+**Success metrics:**
+- Search success rate greater than 95%
+- Zero-result queries less than 5%
+- Search-to-conversion greater than 15%
+- Latency less than 500ms
+
+### Priority 1C: Real-Time Stock Visibility
+
+**Why third:** 74% consensus, Europe crisis (40-50% cancellations)
+
+**Core capabilities:**
+```
+MVP Stock Features:
+
+1. Warehouse Stock Display
+   - Real-time quantity
+   - Warehouse location
+   - Multiple warehouses (if applicable)
+   - Last updated timestamp
+
+2. Stock Status Indicators
+   ● In Stock (green)
+   ◐ Limited Stock (yellow, under 500)
+   ○ Out of Stock (red)
+   ○ Made to Order (grey)
+
+3. Delivery Estimates
+   - Ships today if ordered by [time]
+   - 2-3 weeks if out of stock
+   - 4-6 weeks if made to order
+
+4. Stock Alerts
+   - "Only 247 remaining"
+   - "Low stock alert"
+   - "Back in stock" notification (Phase 1+)
+```
+
+**Infrastructure:**
+- Real-time ERP sync (under 15 minute latency)
+- Warehouse mapping (correct location display)
+- Fallback messaging (if sync fails, say so)
+
+**Success metrics:**
+- Stock verification calls down 90%
+- European order cancellation rate under 10%
+- Cart abandonment at stock page under 30%
+
+### Priority 1D: Logged-In Negotiated Pricing
+
+**Why fourth:** 91% consensus, repeat buyer enabler
+
+**Core capabilities:**
+```
+MVP Pricing Features:
+
+1. Customer-Specific Pricing
+   - Negotiated rates visible when logged in
+   - Quantity breaks shown
+   - Contract pricing noted
+   - List price comparison
+
+2. Pricing Display
+   List Price: $0.125 ea
+   Your Price: $0.108 ea (8% discount)
+
+   Quantity breaks:
+   1,000-4,999:  $0.108 ea
+   5,000-9,999:  $0.102 ea
+   10,000+:      $0.095 ea
+
+3. Terms Display
+   - Payment terms (Net 30, Net 60)
+   - Free shipping threshold ($500+)
+   - Volume discount program info
+   - Contract expiration (if applicable)
+
+4. Order History Pricing
+   - Previous prices visible
+   - Price change notifications
+   - Historical cost analysis
+```
+
+**Success metrics:**
+- Repeat customer online orders up 60%
+- "Request quote" calls down 40%
+- Average order value up 15%
+
+### Priority 1E: Customer Carrier Accounts
+
+**Why last of Tier 1:** 80% consensus, removes shipping barrier
+
+**Core capabilities:**
+```
+MVP Carrier Features:
+
+1. Account Storage
+   - UPS account number
+   - FedEx account number
+   - Default selection
+   - Multiple accounts per customer
+
+2. Checkout Integration
+   Select shipping:
+   ○ MOCAP Standard ($45.50)
+   ● Your UPS Account (billed to you)
+   ○ Your FedEx Account (billed to you)
+
+3. Account Validation
+   - Real-time API check
+   - Invalid account notification
+   - Support contact if issues
+
+4. Freight Options
+   - LTL carrier selection
+   - Freight quote request
+   - Customer freight account
+```
+
+**Infrastructure:**
+- UPS/FedEx API integration
+- Account validation logic
+- Shipping calculation engine
+- Label generation
+
+**Success metrics:**
+- 60%+ B2B orders use carrier accounts
+- Online orders from established accounts up 80%
+- Shipping-related CS calls down 70%
+
+---
+
+## Phase 1 Supplemental: Strategic Value (Tier 2)
+
+If budget/timeline permit, add these two high-value features to MVP. Otherwise, first enhancement after launch.
+
+### Priority 2A: Interactive Product Tables
+
+**Why valuable:** 48-54% of clicks, foundation for self-directed discovery
+
+**Core capabilities:**
+```
+Interactive Table Features:
+
+1. Sortable Columns
+   - Click any header to sort
+   - Ascending/descending toggle
+   - Multi-column sort (hold Shift)
+
+2. Filterable Rows
+   - Dropdown filters per attribute
+   - Multi-select within category
+   - Real-time result count
+   - Clear filters easily
+
+3. Search Within Table
+   - Filter rows by keyword
+   - Instant results
+   - Highlight matches
+
+4. Inline Actions
+   - Add to Cart (quantity modal)
+   - Request Sample
+   - Compare (checkbox)
+   - Quick view
+
+5. Display Options
+   - Column visibility toggle
+   - Density (compact/comfortable)
+   - Export to CSV
+   - Imperial/metric toggle (MOCAP)
+
+6. Mobile Adaptation
+   - Cards instead of table
+   - Key info only
+   - Expandable details
+```
+
+**Development note:** Can build in parallel with Tier 1 features (different data dependencies)
+
+### Priority 2B: Multi-Path Navigation
+
+**Why valuable:** Single path fails 70% of users (Problem Solvers and Explorers)
+
+**Core capabilities:**
+```
+Navigation Paths:
+
+1. "I Know My Part Number"
+   - Prominent search entry
+   - SKU lookup direct to product
+
+2. "Browse by Application"
+   - Thread protection
+   - Powder coating
+   - Surface protection
+
+3. "Browse by Product Type"
+   - Caps & Plugs hierarchy
+   - Clear categorization
+
+4. "Browse by Industry"
+   - Automotive, HVAC, Furniture
+   - Industry-specific landing pages
+```
+
+---
+
+## Phase 2+: Future Enhancements
+
+Features that add value but aren't launch-critical:
+
+| Feature | Phase | Rationale |
+|---------|-------|-----------|
+| Bulk Reorder | Phase 2 | Requires portal foundation |
+| Delivery Date Estimates | Phase 2 | Needs accurate lead time data |
+| Online Sample Requests | Phase 2 | Requires policy decision + abuse controls |
+| Quantity Calculator | Phase 2 | Nice-to-have utility |
+| Product Finder/Wizard | Phase 2 | Duplicates search for some users |
+| AI Product Advisor | Phase 3 | Technology risk, training needed |
+| Visual Product Preview | Phase 3 | Complex for high-variant products |
+| Industry-Specific Pages | Phase 3 | Content creation intensive |
+| Product Comparison | Phase 3 | Limited use case for caps/plugs |
+| Personalization Engine | Phase 3 | Requires 6+ months user data |

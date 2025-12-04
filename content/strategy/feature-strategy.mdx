@@ -1,0 +1,300 @@
+# Feature Strategy (UX & CRO)
+
+## Prioritization Philosophy
+
+28 stakeholders want 50+ features. Budget and timeline allow 5-7 in MVP. Prioritization must be ruthless and data-driven.
+
+Three factors determine priority:
+
+### 1. Stakeholder Consensus (MoSCoW Data)
+- 100% consensus: Customer Portal
+- 91% consensus: Search, Pricing
+- 80% consensus: Carrier Accounts
+- 74% consensus: Stock Visibility
+
+### 2. Foundation Dependencies
+- Search enables everything else
+- Data accuracy blocks automation
+- Portal requires ERP integration
+- Tables need database restructure
+
+### 3. Impact Potential
+- Search fix: 20-25% sales increase
+- Portal: 50%+ CS call reduction
+- Data accuracy: 40-50% European order recovery
+- Carrier accounts: Unlocks online ordering
+
+Features that score high on all three dimensions are MVP. Features that score high on one or two are Phase 1+.
+
+---
+
+## Prioritization Matrix
+
+### TIER 1: Critical (MVP Launch Blockers)
+
+These five features represent the non-negotiable foundation. Launch without them creates worse experience than current broken site.
+
+| Feature | Consensus | Why MVP | Quantified Impact |
+|---------|-----------|---------|-------------------|
+| **Customer Portal** | 100% (22/22) | Order status = 50%+ CS calls | 50%+ call reduction, 24/7 self-service |
+| **Multi-Mode Smart Search** | 91% (21/23) | Current 100% error rate blocks discovery | 20-25% sales increase, eliminate 15+ calls/rep/day |
+| **Real-Time Stock Visibility** | 74% (17/23) | Europe 40-50% cancellations due to bad data | Trust restoration, order accuracy >98% |
+| **Logged-In Negotiated Pricing** | 91% (20/22) | Repeat buyers can't see their prices | Unlocks self-service for price-sensitive customers |
+| **Customer Carrier Accounts** | 80% (12/15) | Shipping cost barrier to online orders | Removes friction for established accounts |
+
+**Combined Impact:** These five features together address the three universal failures (search, portal, data accuracy) and unlock self-service for established customers.
+
+### TIER 2: High-Value (Phase 1 Strategic)
+
+These features significantly improve experience and drive conversion but aren't launch blockers.
+
+| Feature | Consensus | Why High-Value | Experience Impact |
+|---------|-----------|----------------|-------------------|
+| **Interactive Product Tables** | Strong implicit (48-54% clicks) | Users expect spreadsheet behavior | Reduces friction, enables self-directed discovery |
+| **Multi-Path Navigation** | Moderate (competitor validation) | Single path fails 70% of users | Problem Solvers and Explorers enabled |
+
+**Strategic Reasoning:** Tables and navigation dramatically improve UX but aren't blocking. Current static tables work (poorly). Portal and search literally don't function.
+
+### TIER 3: Enhancement (Phase 1+ Addition)
+
+Features with strong stakeholder support or clear conversion benefit but buildable after MVP proves foundation.
+
+| Feature | Consensus | Why Later | Value Timing |
+|---------|-----------|-----------|--------------|
+| **Bulk Reorder** | 83% (15/18) | Requires portal foundation | Repeat buyer efficiency after portal adoption |
+| **Delivery Date Estimates** | 75% (15/20) | Needs accurate lead time data | Trust builder once data accuracy proven |
+| **Online Sample Requests** | Polarized (5.0 vs 2.0) | Requires policy decision + abuse controls | Growth driver after sample policy set |
+| **Quantity Calculator** | 67% (12/18) | Nice-to-have utility | Reduces calculation errors, not blocking |
+| **Product Finder/Wizard** | 56% (14/25) | Duplicates search for some users | Helps Explorers, overlaps with navigation |
+
+### TIER 4: Optimization (Phase 2+)
+
+Features that optimize experience for specific segments or add convenience but low immediate impact.
+
+| Feature | Consensus | Why Phase 2 | Segment Value |
+|---------|-----------|-------------|---------------|
+| **AI Product Advisor** | Mixed | Technology risk, training needed | Long-term vision, wait for data |
+| **Visual Product Preview** | Moderate | Complex for high-variant products | Nice enhancement, not essential |
+| **Industry-Specific Pages** | Moderate | Content creation intensive | SEO benefit, build over time |
+| **Product Comparison** | Low-Moderate | Limited use case for caps/plugs | Technical buyer tool, niche |
+| **Personalization Engine** | Low initial | Requires user behavior data | Optimize after 6+ months data |
+
+---
+
+## Experience Impact by Feature
+
+### Customer Portal: Foundation for Self-Service
+
+**What it solves:**
+- "Where's my order?" (50%+ of CS calls)
+- "Can I get tracking number?" (4-5 tickets daily)
+- "What did I pay last time?" (pricing memory)
+- "Can you send me invoice?" (document requests)
+
+**Core capabilities:**
+```
+MY ORDERS
+
+Recent Orders:
+┌───────────────────────────────────────────────────┐
+│ Order #12345                        Dec 1, 2025   │
+│ ● Delivered | UPS: 1Z999AA10123456784             │
+│ Items: 3 | Total: $487.50                         │
+│ [View Details] [Reorder] [Download Invoice]       │
+└───────────────────────────────────────────────────┘
+
+Quick Actions:
+  [Reorder Favorites] [Track All Shipments]
+
+Order History:
+  [Filter by date/product/status]
+  [Export to CSV]
+```
+
+**Success Metrics:**
+- Adoption rate >30% in first month
+- CS calls down 25% in first month, 50% by month 3
+- Repeat order time reduced by 60%+
+- Invoice download requests eliminated
+
+### Multi-Mode Smart Search: Discovery Foundation
+
+**What it solves:**
+- 100% current error rate
+- 15+ calls daily per rep for search help
+- Veterans can't find parts by SKU
+- Problem Solvers can't search by application
+- Dimensional queries fail
+
+**Search modes required:**
+
+**1. Part Number Search**
+```
+User types: RVC9044
+Result: Instant exact match
+        → Product page or Add to Cart
+```
+
+**2. Dimensional Search**
+```
+User types: 3 inch cap
+Result: Parse dimensions → Filter products → Results page
+        → "47 results for 3" ID caps"
+```
+
+**3. Application Search**
+```
+User types: powder coating masking
+Result: Application landing page + filtered products
+        → "Products for Powder Coating Protection"
+```
+
+**4. Competitor Cross-Reference**
+```
+User types: Caplugs 123-456
+Result: Cross-reference database lookup → Equivalent
+        → "MOCAP equivalent: RVC9044"
+```
+
+**Success Metrics:**
+- Search success rate >95%
+- Search-to-conversion rate >15%
+- Zero-result queries under 5%
+- Average latency under 500ms
+- Search usage >50% of sessions
+
+### Real-Time Stock Visibility: Trust Restoration
+
+**What it solves:**
+- Europe 40-50% cancellations due to bad stock data
+- Customers call to verify every stock number
+- "Out of stock" when actually available (allocation issues)
+- Warehouse location confusion (Ukraine vs Poland)
+
+**Display requirements:**
+```
+┌─────────────────────────────────────────────────┐
+│ RVC9044 - Round Vinyl Cap, Red, 3" ID          │
+│                                                 │
+│ Stock Status:                                   │
+│ ✓ 15,000 available | Poland warehouse          │
+│ ✓ 8,500 available | US warehouse               │
+│ ✗ 0 available | UK warehouse                   │
+│                                                 │
+│ Delivery:                                       │
+│ • Poland: Ships today if ordered by 2 PM GMT   │
+│ • US: Ships today if ordered by 12 PM EST      │
+│                                                 │
+│ Updated: 5 minutes ago                          │
+└─────────────────────────────────────────────────┘
+```
+
+**Success Metrics:**
+- Stock accuracy verification calls down 90%
+- European order cancellation rate under 10%
+- Cart abandonment at stock display under 30%
+- Customer trust score up 40%+
+
+### Interactive Product Tables: Self-Directed Discovery
+
+**What it solves:**
+- 48-54% of clicks on static tables
+- 11.6% dead clicks on headers expecting sort
+- Can't filter 320-variant products efficiently
+- No way to compare specifications
+
+**Functionality required:**
+```
+ROUND VINYL CAPS - RVC SERIES (47 variants shown)
+
+Filter:  [Color: All ▼] [Temp: All ▼] [Feature: All ▼]
+Search within: [     ] 🔍
+
+┌──────┬─────────┬─────┬──────┬────────┬────────┬────────┐
+│ SKU  │ ID      │ OD  │ Len  │ Color  │ Temp   │ Action │
+│ ⇅    │ ⇅       │ ⇅   │ ⇅    │        │        │        │
+├──────┼─────────┼─────┼──────┼────────┼────────┼────────┤
+│ 9044 │ 3.00"   │ ... │ ...  │ Red    │ 180°F  │ [Cart] │
+│ 9045 │ 3.00"   │ ... │ ...  │ Black  │ 180°F  │ [Cart] │
+└──────┴─────────┴─────┴──────┴────────┴────────┴────────┘
+
+Showing 47 of 320 variants | [Show all]
+[⚙ Toggle metric] [↓ Export CSV]
+```
+
+**Success Metrics:**
+- Table interaction rate >60%
+- Time to add item to cart -40%
+- "Wrong product" returns down 30%
+- Mobile table usage >25%
+
+---
+
+## Feature Dependencies
+
+Some features require others to function properly:
+
+```
+┌────────────────────────────────────────────────────┐
+│                  FOUNDATION LAYER                  │
+│                                                    │
+│  Data Accuracy ──────┬──────────────────┐         │
+│  (Phase 0)           │                  │         │
+│                      ▼                  ▼         │
+│              ERP Integration    Analytics         │
+│                      │              Foundation    │
+│                      ▼                  │         │
+│              ┌───────────────┐          │         │
+│              │   CUSTOMER    │          │         │
+│              │    PORTAL     │          │         │
+│              │               │◄─────────┘         │
+│              └───────┬───────┘                    │
+│                      │                            │
+│                      ▼                            │
+│              ┌───────────────┐                    │
+│              │  NEGOTIATED   │                    │
+│              │    PRICING    │                    │
+│              └───────┬───────┘                    │
+│                      │                            │
+│                      ▼                            │
+│              ┌───────────────┐                    │
+│              │   CARRIER     │                    │
+│              │   ACCOUNTS    │                    │
+│              └───────────────┘                    │
+│                                                    │
+└────────────────────────────────────────────────────┘
+
+                        ▼
+
+┌────────────────────────────────────────────────────┐
+│                ENABLEMENT LAYER                    │
+│                                                    │
+│    Search ◄─── Product Data Enrichment            │
+│                                                    │
+│    Tables ◄─── Database Restructure               │
+│                                                    │
+│    Navigation ◄─── IA Finalization                │
+│                                                    │
+└────────────────────────────────────────────────────┘
+
+                        ▼
+
+┌────────────────────────────────────────────────────┐
+│              OPTIMIZATION LAYER                    │
+│                                                    │
+│    Bulk Reorder ◄─── Portal + Usage Data          │
+│                                                    │
+│    Configurators ◄─── Tables + Product Enrichment │
+│                                                    │
+│    Sample Requests ◄─── Portal + Policy Decisions │
+│                                                    │
+└────────────────────────────────────────────────────┘
+```
+
+**Critical path:**
+Data accuracy → ERP integration → Portal → Pricing → Carrier Accounts
+
+Can't build portal without ERP integration. Can't show pricing without portal. Can't enable carrier accounts without checkout.
+
+**Parallel development possible:**
+Search and Tables can develop simultaneously with Portal (different data dependencies).
