@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "dev:search": "pnpm build && next dev",
+    "_": "Workaround for https://github.com/shuding/nextra/issues/3987",
+    "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
+    "build": "next build && pnpm postbuild",
     "start": "next start",
     "lint": "eslint"
   },
@@ -22,6 +25,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.7",
+    "pagefind": "^1.4.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
